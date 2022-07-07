@@ -1,11 +1,11 @@
-# creek - Streams library for Go
-Creek is a Streams library written in Go.  
-It helps you to write functional programming code using generics.
+<p align="center">
+    Creek is a Streams library written in Go.<br>
+    It helps you to write functional programming code using generics.
+</p>
 
 <hr>
 
 # Table of Contents
-- [creek - Streams library for Go](#creek---streams-library-for-go)
 - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Quick start](#quick-start)
@@ -16,6 +16,9 @@ It helps you to write functional programming code using generics.
     - [Filter](#filter)
     - [ForEach](#foreach)
     - [Map](#map)
+    - [Limit](#limit)
+  - [Download and build from source](#download-and-build-from-source)
+  - [Contributing](#contributing)
   - [License](#license)
 
 <hr>
@@ -43,11 +46,11 @@ import (
 func main() {
 	arr := []int{1, 8, 2, 14, 22, 4, 7, 92}
 
-	result := creek.FromArray(arr).Filter(func(i int) bool {
-		return arr[i] > 3
-	}).OrderBy().Collect()
+	result := creek.FromArray(arr).Filter(func(item int) bool {
+        return item > 3
+    }).OrderBy().Collect()
 
-	fmt.Println(result)
+	fmt.Println(result) // [4 7 8 14 22 92]
 }
 ```
 
@@ -63,11 +66,13 @@ string | byte | float32 | float64 | int | int16 | int32 | int64 | uint16 | uint3
 ```
 In order to create a Stream, use the `FromArray` function:
 ```go
+// slice
 arr := []int{1, 8, 2, 14, 22, 4, 7, 92}
 intStream := creek.FromArray(arr)
 
-arr2 := []string{"One", "Two", "Three"}
-stringStream := creek.FromArray(arr2)
+// array
+arr2 := [3]string{"One", "Two", "Three"}
+stringStream := creek.FromArray(arr2[:])
 ```
 
 ### Collect
@@ -120,13 +125,37 @@ creek.FromArray(arr).ForEach(func(item string) {
 ```
 
 ### Map
-The Map function creates a new stream populated with the results of calling the provided function on every element.
+The `Map` function creates a new stream populated with the results of calling the provided function on every element.
 ```go
 arr := []string{"One", "Two", "Three"}
 result := creek.FromArray(arr).Map(func(item string) string {
     return strings.ToUpper(item)
 }) // [ONE, TWO, THREE]
 ```
+
+### Limit
+The `Limit` function constrains the number of elements returned by the stream.
+```go
+result := creek.FromArray([]int{2, 7, 3, 1}).Limit(2).Collect() // [2, 7]
+```
+
+<hr>
+
+## Download and build from source
+First, clone the repository:
+```sh
+https://github.com/0l1v3rr/creek.git
+cd creek
+```
+- Running the tests: `make test`
+- Running the test in detailed version: `make test-detailed`
+- Running the main: `make run`
+
+<hr>
+
+## Contributing
+You can find [here](CONTRIBUTING.md) a contributing guideline.  
+A star would be appreciated as well. 😉
 
 <hr>
 
