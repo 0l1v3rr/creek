@@ -1,0 +1,9 @@
+# Go
+*.go -text        diff=golang
+
+# Docs
+*.markdown        text diff=markdown
+*.md              text diff=markdown
+
+# Makefile
+Makefile          text
