@@ -35,14 +35,18 @@
     - [Count](#count)
     - [Append](#append)
     - [AppendAt](#appendat)
+    - [AppendIf](#appendif)
     - [Remove](#remove)
     - [RemoveAt](#removeat)
+    - [RemoveIf](#removeif)
     - [RemoveWhere](#removewhere)
     - [RemoveDuplicates](#removeduplicates)
     - [IndexOf](#indexof)
     - [LastIndexOf](#lastindexof)
     - [ElementAt](#elementat)
     - [ElementAtOrElse](#elementatorelse)
+    - [Equals](#equals)
+    - [ArrEquals](#arrequals)
     - [Reverse](#reverse)
     - [Join](#join)
     - [Contains](#contains)
@@ -203,6 +207,13 @@ arr := []int{2, 7, 3, 1}
 result := creek.FromArray(arr).AppendAt(1, 14) // [2, 14, 7, 3, 1]
 ```
 
+### AppendIf
+The `AppendIf` function adds an element to the stream if the second parameter is true.
+```go
+arr := []int{2, 7, 3, 1}
+result := creek.FromArray(arr).AppendIf(8, len(arr) == 4) // [2, 7, 3, 1, 8]
+```
+
 ### Remove
 The `Remove` function removes the passed element from a stream.
 ```go
@@ -216,6 +227,13 @@ If the index is out of range, nothing happens.
 ```go
 arr := []int{2, 7, 3, 1}
 result := creek.FromArray(arr).RemoveAt(2) // [2, 7, 1]
+```
+
+### RemoveIf
+The `RemoveIf` function removes the passed element from a stream if the second parameter is true.
+```go
+arr := []int{2, 7, 3, 1}
+result := creek.FromArray(arr).RemoveIf(7, len(arr) == 4) // [2, 3, 1]
 ```
 
 ### RemoveWhere
@@ -265,6 +283,24 @@ arr := []int{3, 4, 1, 4, 2, 9}
 result := creek.FromArray(arr).ElementAtOrElse(5, 100) // 9
 
 result2 = creek.FromArray(arr).ElementAtOrElse(6, 100) // 100
+```
+
+### Equals
+The `Equals` function compares two streams and returns true if they're equals.
+```go
+arr := []int{2, 7, 3, 1}
+result := creek.FromArray(arr).Equals(creek.Stream[int]{
+    Array: []int{2, 7, 3, 1},
+})
+// true
+```
+
+### ArrEquals
+The `ArrEquals` function compares the stream and the passed array and returns true if they're equals.
+```go
+arr := []int{2, 7, 3, 1}
+result = creek.FromArray(arr).ArrEquals([]int{2, 7, 3, 2})
+// false
 ```
 
 ### Reverse

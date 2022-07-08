@@ -29,6 +29,15 @@ func (s Stream[T]) Remove(item T) Stream[T] {
 	}
 }
 
+// The RemoveIf function removes the passed element from a stream if the second parameter is true.
+func (s Stream[T]) RemoveIf(item T, c bool) Stream[T] {
+	if !c {
+		return s
+	}
+
+	return s.Remove(item)
+}
+
 // The RemoveAt function removes the item if its index matches the index passed in.
 func (s Stream[T]) RemoveAt(index int) Stream[T] {
 	if index < 0 {

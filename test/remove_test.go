@@ -64,3 +64,25 @@ func TestRemoveDuplicates(t *testing.T) {
 		t.Errorf("Map FAILED - Expected: %v, got: %v", expected, result)
 	}
 }
+
+func TestRemoveIf(t *testing.T) {
+	result := creek.FromArray([]int{2, 7, 3, 1}).RemoveIf(7, true).Collect()
+	expected := []int{2, 3, 1}
+
+	if reflect.DeepEqual(result, expected) {
+		t.Logf("Map PASSED - Expected: %v, got: %v", expected, result)
+	} else {
+		t.Errorf("Map FAILED - Expected: %v, got: %v", expected, result)
+	}
+
+	// ------------------
+
+	result = creek.FromArray([]int{2, 7, 3, 1}).RemoveIf(7, false).Collect()
+	expected = []int{2, 7, 3, 1}
+
+	if reflect.DeepEqual(result, expected) {
+		t.Logf("Map PASSED - Expected: %v, got: %v", expected, result)
+	} else {
+		t.Errorf("Map FAILED - Expected: %v, got: %v", expected, result)
+	}
+}
