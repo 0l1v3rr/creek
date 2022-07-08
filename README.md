@@ -1,25 +1,33 @@
-# Creek
-
-Creek is a tiny Streams library written in Go.<br>
-It helps you to write functional programming code using generics.
+<div align="center">
+    <img src="./images/logo.png" width="320px" alt="Creek Logo">
+</div>
+<div align="center">
+    <a href="https://github.com/0l1v3rr/creek">Creek</a> is a tiny, fully-featured Streams library 
+    for <a href="https://go.dev/">Go</a>. <br>
+    Creek creates wrappers around a specific data source (array or slice), allowing us to operate with that data source and making bulk processing convenient and fast.
+    Creek helps you to follow the functional programming paradigms.    
+</div>
 <br>
-<img src="https://img.shields.io/github/release/0l1v3rr/creek.svg?style=flat-square">
-<img src="https://img.shields.io/github/workflow/status/0l1v3rr/creek/Test?style=flat-square">
-<img src="https://img.shields.io/github/repo-size/0l1v3rr/creek?style=flat-square">
-<img src="https://img.shields.io/github/license/0l1v3rr/creek?style=flat-square">
-<img src="https://img.shields.io/github/go-mod/go-version/0l1v3rr/creek?style=flat-square">
+<div align="center">
+    <img src="https://img.shields.io/github/release/0l1v3rr/creek.svg?style=flat-square" alt="Relase">
+    <img src="https://img.shields.io/github/workflow/status/0l1v3rr/creek/Test?style=flat-square" alt="Test Status">
+    <img src="https://img.shields.io/github/repo-size/0l1v3rr/creek?style=flat-square" alt="Repository Size">
+    <img src="https://img.shields.io/github/license/0l1v3rr/creek?style=flat-square" alt="License">
+    <img src="https://img.shields.io/github/go-mod/go-version/0l1v3rr/creek?style=flat-square" alt="Go Version">
+</div>
 
 <hr>
 
 # Table of Contents
-- [Creek](#creek)
 - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Quick start](#quick-start)
-  - [Examples](#examples)
-    - [Create stream](#create-stream)
+  - [Create stream](#create-stream)
+    - [Stream from regular arrays and slices](#stream-from-regular-arrays-and-slices)
+  - [Functions](#functions)
     - [Collect](#collect)
-    - [OrderBy, OrderByDescending](#orderby-orderbydescending)
+    - [OrderBy](#orderby)
+    - [OrderByDescending](#orderbydescending)
     - [Filter](#filter)
     - [ForEach](#foreach)
     - [Map](#map)
@@ -40,6 +48,7 @@ It helps you to write functional programming code using generics.
     - [Contains](#contains)
     - [IsEmpty](#isempty)
     - [Clear](#clear)
+    - [Wait](#wait)
   - [Method chaining](#method-chaining)
   - [Download and build from source](#download-and-build-from-source)
   - [Contributing](#contributing)
@@ -80,15 +89,15 @@ func main() {
 
 <hr>
 
-## Examples
+## Create stream
+You can create a stream from almost every type of array or slice.
 
-### Create stream
-You can create a stream from almost every type of array or slice.  
+### Stream from regular arrays and slices
 The supported types are the following:
 ```go
 string | byte | float32 | float64 | int | int16 | int32 | int64 | uint16 | uint32 | uint64
 ```
-In order to create a Stream, use the `FromArray` function:
+In order to create a stream, use the `FromArray` function:
 ```go
 // slice
 arr := []int{1, 8, 2, 14, 22, 4, 7, 92}
@@ -99,6 +108,10 @@ arr2 := [3]string{"One", "Two", "Three"}
 stringStream := creek.FromArray(arr2[:])
 ```
 
+<hr>
+
+## Functions
+
 ### Collect
 The `Collect` function returns the modified array from the streams.
 ```go
@@ -106,15 +119,18 @@ arr := []int{1, 8, 2, 14, 22, 4, 7, 92}
 arrFromStream := creek.FromArray(arr).Collect() // [1, 8, 2, 14, 22, 4, 7, 92]
 ```
 
-### OrderBy, OrderByDescending
-There are two ways to Sort a stream. **Ascending** and **Descending**.  
+### OrderBy
 The `OrderBy` function sorts the stream in ascending order.  
+```go
+arr := []int{1, 8, 2, 14, 22, 4, 7, 92}
+result := creek.FromArray(arr).OrderBy() // [1, 2, 4, 7, 8, 14, 22, 92]
+```
+
+### OrderByDescending
 The `OrderByDescending` function sorts the stream in descending order.
 ```go
 arr := []int{1, 8, 2, 14, 22, 4, 7, 92}
-
-ascStream := creek.FromArray(arr).OrderBy()             // [1, 2, 4, 7, 8, 14, 22, 92]
-descStream := creek.FromArray(arr).OrderByDescending()  // [92, 22, 14, 8, 7, 4, 2, 1]
+result := creek.FromArray(arr).OrderByDescending() // [92, 22, 14, 8, 7, 4, 2, 1]
 ```
 
 ### Filter
@@ -284,7 +300,15 @@ result = creek.FromArray(arr).IsEmpty() // false
 The `Clear` function clears every element from the stream.
 ```go
 arr := []int{3, 4, 1, 4, 2, 9}
-result := creek.FromArray().Clear() // []
+result := creek.FromArray(arr).Clear() // []
+```
+
+### Wait
+The `Wait` function pauses the current stream for the duration passed.
+The first and only parameter expects a value from the built-in `time.Duration` package.
+```go
+arr := []int{3, 4, 2, 9}
+result := creek.FromArray(arr).Wait(time.Second * 5) // waits for 5 seconds
 ```
 
 <hr>
