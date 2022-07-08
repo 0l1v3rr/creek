@@ -9,3 +9,7 @@ test:
 .PHONY: test-detailed
 test-detailed:
 	@go test -v ./test
+
+.PHONY: fmt
+fmt:
+	@go fmt

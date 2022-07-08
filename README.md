@@ -31,6 +31,10 @@ It helps you to write functional programming code using generics.
     - [RemoveAt](#removeat)
     - [RemoveWhere](#removewhere)
     - [RemoveDuplicates](#removeduplicates)
+    - [IndexOf](#indexof)
+    - [LastIndexOf](#lastindexof)
+    - [ElementAt](#elementat)
+    - [ElementAtOrElse](#elementatorelse)
     - [Reverse](#reverse)
     - [Join](#join)
     - [Contains](#contains)
@@ -214,6 +218,39 @@ arr := []int{2, 7, 3, 1, 3, 9, 3}
 result := creek.FromArray(arr).RemoveDuplicates() // [2, 7, 3, 1, 9]
 ```
 
+### IndexOf
+The `IndexOf` function returns the position of the first occurrence of the passed value in a stream.
+```go
+arr := []int{3, 4, 1, 4, 2, 9}
+result := creek.FromArray(arr).IndexOf(4) // 1
+```
+
+### LastIndexOf
+The `LastIndexOf` function returns the position of the last occurrence of the passed value in a stream.
+```go
+arr := []int{3, 4, 1, 4, 2, 9}
+result := creek.FromArray(arr).LastIndexOf(4) // 3
+```
+
+### ElementAt
+The `ElementAt` function is used to get an element from the stream at a particular index.  
+If the element is not present, it throws a panic.
+```go
+arr := []int{3, 4, 1, 4, 2, 9}
+result := creek.FromArray(arr).ElementAt(2) // 1
+```
+
+### ElementAtOrElse
+The `ElementAtOrElse` function is used to get an element from the stream at a particular index.  
+If the element is not present, it returns the elseValue, which is the second parameter.
+```go
+arr := []int{3, 4, 1, 4, 2, 9}
+
+result := creek.FromArray(arr).ElementAtOrElse(5, 100) // 9
+
+result2 = creek.FromArray(arr).ElementAtOrElse(6, 100) // 100
+```
+
 ### Reverse
 The `Reverse` function reverses the stream.
 ```go
@@ -249,6 +286,8 @@ The `Clear` function clears every element from the stream.
 arr := []int{3, 4, 1, 4, 2, 9}
 result := creek.FromArray().Clear() // []
 ```
+
+<hr>
 
 ## Method chaining
 With **creek**, method chaining is very straightforward and easy to read.  
