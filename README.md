@@ -24,12 +24,18 @@ It helps you to write functional programming code using generics.
     - [ForEach](#foreach)
     - [Map](#map)
     - [Limit](#limit)
+    - [Count](#count)
     - [Append](#append)
     - [AppendAt](#appendat)
     - [Remove](#remove)
     - [RemoveAt](#removeat)
     - [RemoveWhere](#removewhere)
     - [RemoveDuplicates](#removeduplicates)
+    - [Reverse](#reverse)
+    - [Join](#join)
+    - [Contains](#contains)
+    - [IsEmpty](#isempty)
+    - [Clear](#clear)
   - [Method chaining](#method-chaining)
   - [Download and build from source](#download-and-build-from-source)
   - [Contributing](#contributing)
@@ -154,6 +160,13 @@ arr := []int{2, 7, 3, 1}
 result := creek.FromArray(arr).Limit(2) // [2, 7]
 ```
 
+### Count
+The `Count` function returns the count of elements in the stream.
+```go
+arr := []int{3, 4, 1, 4, 2, 9}
+result := creek.FromArray(arr).Count() // 6
+```
+
 ### Append
 The `Append` function adds an element to the stream.
 ```go
@@ -195,10 +208,46 @@ result := creek.FromArray(arr).RemoveWhere(func(item int) bool {
 ```
 
 ### RemoveDuplicates
-The RemoveDuplicates function removes every duplicate item from the stream.
+The `RemoveDuplicates` function removes every duplicate item from the stream.
 ```go
 arr := []int{2, 7, 3, 1, 3, 9, 3}
 result := creek.FromArray(arr).RemoveDuplicates() // [2, 7, 3, 1, 9]
+```
+
+### Reverse
+The `Reverse` function reverses the stream.
+```go
+arr := []int{2, 7, 3, 1}
+result := creek.FromArray(arr).Reverse() // [1, 3, 7, 2]
+```
+
+### Join
+The `Join` function concatenates the elements of the stream to create a single string.  
+The passed parameter is placed between the elements.
+```go
+arr := []int{2, 7, 3, 1}
+result := creek.FromArray(arr).Join(", ") // result: "2, 7, 3, 1"
+```
+
+### Contains
+The `Contains` function checks whether the stream contains the passed item.
+```go
+arr := []int{2, 7, 3, 1}
+result := creek.FromArray(arr).Contains(2) // true
+```
+
+### IsEmpty
+The `IsEmpty` function checks whether the stream is empty.
+```go
+arr := []int{2, 7, 3, 1}
+result = creek.FromArray(arr).IsEmpty() // false
+```
+
+### Clear
+The `Clear` function clears every element from the stream.
+```go
+arr := []int{3, 4, 1, 4, 2, 9}
+result := creek.FromArray().Clear() // []
 ```
 
 ## Method chaining
