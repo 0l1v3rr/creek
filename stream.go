@@ -1,5 +1,10 @@
 package creek
 
+import (
+	"bufio"
+	"os"
+)
+
 // The Streamable interface defines every type you can use the streams with.
 type Streamable interface {
 	string | byte | float32 | float64 | int | int16 | int32 | int64 | uint16 | uint32 | uint64
@@ -27,6 +32,22 @@ func Empty[T Streamable]() Stream[T] {
 func FromValues[T Streamable](values ...T) Stream[T] {
 	return Stream[T]{
 		Array: values,
+	}
+}
+
+// The FromFile function creates a stream from a file.
+// The file is read line by line. Each line is an element of the stream.
+func FromFile(file *os.File) Stream[string] {
+	scanner := bufio.NewScanner(file)
+
+	result := []string{}
+	for scanner.Scan() {
+		result = append(result, scanner.Text())
+	}
+
+	file.Close()
+	return Stream[string]{
+		Array: result,
 	}
 }
 

@@ -36,6 +36,7 @@
     - [Empty stream](#empty-stream)
     - [Stream from regular arrays and slices](#stream-from-regular-arrays-and-slices)
     - [Stream from parameter values](#stream-from-parameter-values)
+    - [Stream from a file](#stream-from-a-file)
   - [Functions](#functions)
     - [Collect](#collect)
     - [OrderBy](#orderby)
@@ -146,6 +147,16 @@ stringStream := creek.FromArray(arr2[:])
 ### Stream from parameter values
 ```go
 stream := creek.FromValues("Apple", "Strawberry", "Peach")
+```
+
+### Stream from a file
+The `FromFile` function creates a stream from a file.  
+The file is read line by line. Each line is an element of the stream.  
+Parameters:
+- `os.File` file
+```go
+file, _ := os.Open("/path/to/file.txt")
+stream := creek.FromFile(file)
 ```
 
 <hr>
