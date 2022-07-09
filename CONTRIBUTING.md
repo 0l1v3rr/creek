@@ -1,6 +1,6 @@
 # Contributing
 First of all, thanks for taking the time to contribute!  
-Every contribution is appreciated.
+Every contribution is appreciated and welcomed.
 
 ## There are many ways to contribute:
 
@@ -19,11 +19,11 @@ Do you want to fix a bug or add a feature?
 3. Commit and push your changes
 4. Open a Pull Request with the changes you made, and write a few words about it
 
-## Some important things
-* If you fork the repo and want to add changes, creating a new branch for it is optional.  
-* If you want to clone this repository and make changes, [here](README.md#download-and-build-from-source) are some important things.
-* If you made changes, and if it is possible, write some tests.
-* You can write tests in the `/test` folder.
-* If your Pull Request contains a new feature, please include it on the README.
+#### Important things
+- Creating a new branch for your feature or your bug fix is optional.
+- If you made changes, and if it is possible, write some tests. You can write tests in the `/test` folder.
+- If your Pull Request contains a new feature, please include it on the README.
+- The Pull Request should pass all the tests, the GitHub Actions will test these as well.
+- Before every commit, run the `make fmt` command.
 
 You're all done, **thanks!**
