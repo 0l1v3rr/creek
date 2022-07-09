@@ -56,6 +56,10 @@
     - [LastIndexOf](#lastindexof)
     - [ElementAt](#elementat)
     - [ElementAtOrElse](#elementatorelse)
+    - [Find](#find)
+    - [FindIndex](#findindex)
+    - [FindLast](#findlast)
+    - [FindLastIndex](#findlastindex)
     - [All](#all)
     - [Some](#some)
     - [Equals](#equals)
@@ -303,6 +307,46 @@ arr := []int{3, 4, 1, 4, 2, 9}
 result := creek.FromArray(arr).ElementAtOrElse(5, 100) // 9
 
 result2 = creek.FromArray(arr).ElementAtOrElse(6, 100) // 100
+```
+
+### Find
+The `Find` function searches for an element that matches the conditions passed and returns the first occurrence within the entire stream.
+```go
+res := []int{2, 7, 3, 1, 4}
+result := creek.FromArray(arr).Find(func(item int) bool {
+    return item%2 == 0
+})
+// 2
+```
+
+### FindIndex
+The `FindIndex` function searches for an element that matches the conditions passed and returns the index of the first occurrence within the entire stream.
+```go
+res := []int{2, 7, 3, 1, 4}
+result := creek.FromArray(arr).FindIndex(func(item int) bool {
+    return item%2 == 0
+})
+// 0
+```
+
+### FindLast
+The `FindLast` function searches for an element that matches the conditions passed and returns the last occurrence within the entire stream.
+```go
+res := []int{2, 7, 3, 1, 4}
+result := creek.FromArray(arr).FindLast(func(item int) bool {
+    return item%2 == 0
+})
+// 4
+```
+
+### FindLastIndex
+The `FindLastIndex` function searches for an element that matches the conditions passed and returns the index of the last occurrence within the entire stream.
+```go
+res := []int{2, 7, 3, 1, 4}
+result := creek.FromArray(arr).FindLastIndex(func(item int) bool {
+    return item%2 == 0
+})
+// 4
 ```
 
 ### All
