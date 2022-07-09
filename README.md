@@ -33,8 +33,9 @@
   - [Installation](#installation)
   - [Quick start](#quick-start)
   - [Create stream](#create-stream)
-    - [Stream from regular arrays and slices](#stream-from-regular-arrays-and-slices)
     - [Empty stream](#empty-stream)
+    - [Stream from regular arrays and slices](#stream-from-regular-arrays-and-slices)
+    - [Stream from parameter values](#stream-from-parameter-values)
   - [Functions](#functions)
     - [Collect](#collect)
     - [OrderBy](#orderby)
@@ -60,6 +61,12 @@
     - [FindIndex](#findindex)
     - [FindLast](#findlast)
     - [FindLastIndex](#findlastindex)
+    - [Max](#max)
+    - [MaxIndex](#maxindex)
+    - [Min](#min)
+    - [MinIndex](#minindex)
+    - [Sum](#sum)
+    - [Average](#average)
     - [All](#all)
     - [Some](#some)
     - [Equals](#equals)
@@ -114,6 +121,12 @@ func main() {
 ## Create stream
 You can create a stream from almost every type of array or slice.
 
+### Empty stream
+The `Empty` function returns an empty stream.
+```go
+emptyStream := creek.Empty[int]()
+```
+
 ### Stream from regular arrays and slices
 The supported types are the following:
 ```go
@@ -130,10 +143,9 @@ arr2 := [3]string{"One", "Two", "Three"}
 stringStream := creek.FromArray(arr2[:])
 ```
 
-### Empty stream
-The `Empty` function returns an empty stream.
+### Stream from parameter values
 ```go
-emptyStream := creek.Empty[int]()
+stream := creek.FromValues("Apple", "Strawberry", "Peach")
 ```
 
 <hr>
@@ -347,6 +359,49 @@ result := creek.FromArray(arr).FindLastIndex(func(item int) bool {
     return item%2 == 0
 })
 // 4
+```
+
+### Max
+The `Max` function returns the largest element from the stream.
+```go
+arr := []int{2, 7, 3, 1, 9, 12, 5}
+result := creek.FromArray(arr).Max() // 12
+```
+
+### MaxIndex
+The `MaxIndex` function returns the index of the largest element from the stream.
+```go
+arr := []int{2, 7, 3, 1, 9, 12, 5}
+result := creek.FromArray(arr).MaxIndex() // 5
+```
+
+### Min
+The `Min` function returns the smallest element from the stream.
+```go
+arr := []int{2, 7, 3, 1, 9, 12, 5}
+result := creek.FromArray(arr).Min() // 1
+```
+
+### MinIndex
+The `MaxIndex` function returns the index of the smallest element from the stream.
+```go
+arr := []int{2, 7, 3, 1, 9, 12, 5}
+result := creek.FromArray(arr).MinIndex() // 3
+```
+
+### Sum
+The `Sum` function adds up all values in a stream.
+```go
+arr := []int{2, 7, 3, 1, 9, 12, 5}
+result := creek.FromArray(arr).Sum() // 39
+```
+
+### Average
+The `Average` function calculates the average of the stream.  
+This function doesn't work with strings.
+```go
+arr := []int{2, 7, 3, 1, 9, 12, 5}
+result := creek.FromArray(arr).Average() // 5.571428571428571
 ```
 
 ### All

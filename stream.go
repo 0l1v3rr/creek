@@ -23,6 +23,13 @@ func Empty[T Streamable]() Stream[T] {
 	}
 }
 
+// The FromValues function returns a stream made of the specified parameters.
+func FromValues[T Streamable](values ...T) Stream[T] {
+	return Stream[T]{
+		Array: values,
+	}
+}
+
 // The Collect function returns the modified array from the streams.
 func (s Stream[T]) Collect() []T {
 	return s.Array
