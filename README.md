@@ -9,11 +9,21 @@
 </div>
 <br>
 <div align="center">
-    <img src="https://img.shields.io/github/release/0l1v3rr/creek.svg?style=flat-square" alt="Relase">
-    <img src="https://img.shields.io/github/workflow/status/0l1v3rr/creek/Test?style=flat-square" alt="Test Status">
-    <img src="https://img.shields.io/github/repo-size/0l1v3rr/creek?style=flat-square" alt="Repository Size">
-    <img src="https://img.shields.io/github/license/0l1v3rr/creek?style=flat-square" alt="License">
-    <img src="https://img.shields.io/github/go-mod/go-version/0l1v3rr/creek?style=flat-square" alt="Go Version">
+    <a href="https://github.com/0l1v3rr/creek/releases">
+        <img src="https://img.shields.io/github/release/0l1v3rr/creek.svg?style=flat-square" alt="Relase">
+    </a>
+    <a href="https://github.com/0l1v3rr/creek/actions">
+        <img src="https://img.shields.io/github/workflow/status/0l1v3rr/creek/Test?style=flat-square" alt="Test Status">
+    </a>
+    <a href="https://github.com/0l1v3rr/creek/blob/master/LICENSE">
+        <img src="https://img.shields.io/github/license/0l1v3rr/creek?style=flat-square" alt="License">
+    </a>
+    <a href="https://github.com/0l1v3rr/creek/blob/master/go.mod">
+        <img src="https://img.shields.io/github/go-mod/go-version/0l1v3rr/creek?style=flat-square" alt="Go Version">
+    </a>
+    <a href="https://goreportcard.com/report/github.com/0l1v3rr/creek">
+        <img src="https://goreportcard.com/badge/github.com/0l1v3rr/creek?style=flat-square" alt="Go Report">
+    </a>
 </div>
 
 <hr>
@@ -24,6 +34,7 @@
   - [Quick start](#quick-start)
   - [Create stream](#create-stream)
     - [Stream from regular arrays and slices](#stream-from-regular-arrays-and-slices)
+    - [Empty stream](#empty-stream)
   - [Functions](#functions)
     - [Collect](#collect)
     - [OrderBy](#orderby)
@@ -45,11 +56,14 @@
     - [LastIndexOf](#lastindexof)
     - [ElementAt](#elementat)
     - [ElementAtOrElse](#elementatorelse)
+    - [All](#all)
+    - [Some](#some)
     - [Equals](#equals)
     - [ArrEquals](#arrequals)
     - [Reverse](#reverse)
     - [Join](#join)
     - [Contains](#contains)
+    - [Distinct](#distinct)
     - [IsEmpty](#isempty)
     - [Clear](#clear)
     - [Wait](#wait)
@@ -110,6 +124,12 @@ intStream := creek.FromArray(arr)
 // array
 arr2 := [3]string{"One", "Two", "Three"}
 stringStream := creek.FromArray(arr2[:])
+```
+
+### Empty stream
+The `Empty` function returns an empty stream.
+```go
+emptyStream := creek.Empty[int]()
 ```
 
 <hr>
@@ -285,6 +305,26 @@ result := creek.FromArray(arr).ElementAtOrElse(5, 100) // 9
 result2 = creek.FromArray(arr).ElementAtOrElse(6, 100) // 100
 ```
 
+### All
+The `All` function determines whether all elements of the stream satisfy the passed condition.
+```go
+arr := []int{2, 7, 3, 1}
+result := creek.FromArray(arr).All(func(item int) bool {
+    return item%2 == 0
+}) 
+// false
+```
+
+### Some
+The `Some` function determines whether any of the elements of the stream satisfy the passed condition.
+```go
+arr := []int{2, 7, 3, 1}
+result := creek.FromArray(arr).Some(func(item int) bool {
+    return item%2 == 0
+})
+// true
+```
+
 ### Equals
 The `Equals` function compares two streams and returns true if they're equals.
 ```go
@@ -323,6 +363,13 @@ The `Contains` function checks whether the stream contains the passed item.
 ```go
 arr := []int{2, 7, 3, 1}
 result := creek.FromArray(arr).Contains(2) // true
+```
+
+### Distinct
+The `Distinct` function filters every distinct element from the stream.
+```go
+arr := []int{2, 7, 3, 1, 3, 9, 3}
+result := creek.FromArray(arr).Distinct() // [2, 7, 3, 1, 9]
 ```
 
 ### IsEmpty
@@ -378,8 +425,9 @@ https://github.com/0l1v3rr/creek.git
 cd creek
 ```
 - Running the tests: `make test`
-- Running the test in detailed version: `make test-detailed`
-- Running the main: `make run`
+- Running the test in detailed version: `make test_detailed`
+- Test coverage: `make test_coverage`
+- Go formatting: `make fmt`
 
 <hr>
 

@@ -16,6 +16,13 @@ func FromArray[T Streamable](array []T) Stream[T] {
 	}
 }
 
+// The Empty function returns an empty stream.
+func Empty[T Streamable]() Stream[T] {
+	return Stream[T]{
+		Array: []T{},
+	}
+}
+
 // The Collect function returns the modified array from the streams.
 func (s Stream[T]) Collect() []T {
 	return s.Array

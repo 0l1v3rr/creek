@@ -16,4 +16,4 @@ test_coverage:
 
 .PHONY: fmt
 fmt:
-	go fmt
+	go fmt -x ./ ./test

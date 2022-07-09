@@ -73,3 +73,8 @@ func (s Stream[T]) RemoveDuplicates() Stream[T] {
 		Array: result,
 	}
 }
+
+// The Distinct function filters every distinct element from the stream.
+func (s Stream[T]) Distinct() Stream[T] {
+	return s.RemoveDuplicates()
+}
