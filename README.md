@@ -38,46 +38,46 @@
     - [Stream from parameter values](#stream-from-parameter-values)
     - [Stream from a file](#stream-from-a-file)
   - [Functions](#functions)
-    - [Collect](#collect)
-    - [OrderBy](#orderby)
-    - [OrderByDescending](#orderbydescending)
-    - [Filter](#filter)
-    - [ForEach](#foreach)
-    - [Map](#map)
-    - [Limit](#limit)
-    - [Count](#count)
+    - [All](#all)
     - [Append](#append)
     - [AppendAt](#appendat)
     - [AppendIf](#appendif)
-    - [Remove](#remove)
-    - [RemoveAt](#removeat)
-    - [RemoveIf](#removeif)
-    - [RemoveWhere](#removewhere)
-    - [RemoveDuplicates](#removeduplicates)
-    - [IndexOf](#indexof)
-    - [LastIndexOf](#lastindexof)
+    - [ArrEquals](#arrequals)
+    - [Average](#average)
+    - [Clear](#clear)
+    - [Collect](#collect)
+    - [Contains](#contains)
+    - [Count](#count)
+    - [Distinct](#distinct)
     - [ElementAt](#elementat)
     - [ElementAtOrElse](#elementatorelse)
+    - [Equals](#equals)
+    - [Filter](#filter)
     - [Find](#find)
     - [FindIndex](#findindex)
     - [FindLast](#findlast)
     - [FindLastIndex](#findlastindex)
+    - [ForEach](#foreach)
+    - [IndexOf](#indexof)
+    - [IsEmpty](#isempty)
+    - [Join](#join)
+    - [LastIndexOf](#lastindexof)
+    - [Limit](#limit)
+    - [Map](#map)
     - [Max](#max)
     - [MaxIndex](#maxindex)
     - [Min](#min)
     - [MinIndex](#minindex)
-    - [Sum](#sum)
-    - [Average](#average)
-    - [All](#all)
-    - [Some](#some)
-    - [Equals](#equals)
-    - [ArrEquals](#arrequals)
+    - [OrderBy](#orderby)
+    - [OrderByDescending](#orderbydescending)
+    - [Remove](#remove)
+    - [RemoveAt](#removeat)
+    - [RemoveDuplicates](#removeduplicates)
+    - [RemoveIf](#removeif)
+    - [RemoveWhere](#removewhere)
     - [Reverse](#reverse)
-    - [Join](#join)
-    - [Contains](#contains)
-    - [Distinct](#distinct)
-    - [IsEmpty](#isempty)
-    - [Clear](#clear)
+    - [Sum](#sum)
+    - [Some](#some)
     - [Wait](#wait)
   - [Method chaining](#method-chaining)
   - [Download and build from source](#download-and-build-from-source)
@@ -163,79 +163,14 @@ stream := creek.FromFile(file)
 
 ## Functions
 
-### Collect
-The `Collect` function returns the modified array from the streams.
-```go
-arr := []int{1, 8, 2, 14, 22, 4, 7, 92}
-arrFromStream := creek.FromArray(arr).Collect() // [1, 8, 2, 14, 22, 4, 7, 92]
-```
-
-### OrderBy
-The `OrderBy` function sorts the stream in ascending order.  
-```go
-arr := []int{1, 8, 2, 14, 22, 4, 7, 92}
-result := creek.FromArray(arr).OrderBy() // [1, 2, 4, 7, 8, 14, 22, 92]
-```
-
-### OrderByDescending
-The `OrderByDescending` function sorts the stream in descending order.
-```go
-arr := []int{1, 8, 2, 14, 22, 4, 7, 92}
-result := creek.FromArray(arr).OrderByDescending() // [92, 22, 14, 8, 7, 4, 2, 1]
-```
-
-### Filter
-The `Filter` function leaves only those elements in the array that make the specified condition true.
-```go
-arr := []string{"One", "Two", "Three"}
-result := creek.FromArray(arr).Filter(func(item string) bool {
-    return strings.HasPrefix(item, "T")
-}) // [Two, Three]
-
-// ----------------------------------------------
-
-arr2 := []int{1, 4, 6, 2, 7, 3}
-result2 := creek.FromArray(arr2).Filter(func(item int) bool {
-    return item%2 == 0
-}) // [4, 6, 2]
-```
-
-### ForEach
-The `ForEach` method runs the specified method on every element in the Stream.  
-Warning: this method doesn't return anything
-```go
-arr := []string{"One", "Two", "Three"}
-creek.FromArray(arr).ForEach(func(item string) {
-    fmt.Println(item)
-})
-
-// -- Output: --
-// One
-// Two
-// Three
-```
-
-### Map
-The `Map` function creates a new stream populated with the results of calling the provided function on every element.
-```go
-arr := []string{"One", "Two", "Three"}
-result := creek.FromArray(arr).Map(func(item string) string {
-    return strings.ToUpper(item)
-}) // [ONE, TWO, THREE]
-```
-
-### Limit
-The `Limit` function constrains the number of elements returned by the stream.
+### All
+The `All` function determines whether all elements of the stream satisfy the passed condition.
 ```go
 arr := []int{2, 7, 3, 1}
-result := creek.FromArray(arr).Limit(2) // [2, 7]
-```
-
-### Count
-The `Count` function returns the count of elements in the stream.
-```go
-arr := []int{3, 4, 1, 4, 2, 9}
-result := creek.FromArray(arr).Count() // 6
+result := creek.FromArray(arr).All(func(item int) bool {
+    return item%2 == 0
+}) 
+// false
 ```
 
 ### Append
@@ -261,56 +196,55 @@ arr := []int{2, 7, 3, 1}
 result := creek.FromArray(arr).AppendIf(8, len(arr) == 4) // [2, 7, 3, 1, 8]
 ```
 
-### Remove
-The `Remove` function removes the passed element from a stream.
-```go
-arr := []int{2, 7, 3, 1, 3}
-result = creek.FromArray(arr).Remove(3) // [2, 7, 1]
-```
-
-### RemoveAt
-The `RemoveAt` function removes the item if its index matches the index passed in.  
-If the index is out of range, nothing happens.
+### ArrEquals
+The `ArrEquals` function compares the stream and the passed array and returns true if they're equals.
 ```go
 arr := []int{2, 7, 3, 1}
-result := creek.FromArray(arr).RemoveAt(2) // [2, 7, 1]
+result = creek.FromArray(arr).ArrEquals([]int{2, 7, 3, 2})
+// false
 ```
 
-### RemoveIf
-The `RemoveIf` function removes the passed element from a stream if the second parameter is true.
+### Average
+The `Average` function calculates the average of the stream.  
+This function doesn't work with strings.
+```go
+arr := []int{2, 7, 3, 1, 9, 12, 5}
+result := creek.FromArray(arr).Average() // 5.571428571428571
+```
+
+### Clear
+The `Clear` function clears every element from the stream.
+```go
+arr := []int{3, 4, 1, 4, 2, 9}
+result := creek.FromArray(arr).Clear() // []
+```
+
+### Collect
+The `Collect` function returns the modified array from the streams.
+```go
+arr := []int{1, 8, 2, 14, 22, 4, 7, 92}
+arrFromStream := creek.FromArray(arr).Collect() // [1, 8, 2, 14, 22, 4, 7, 92]
+```
+
+### Contains
+The `Contains` function checks whether the stream contains the passed item.
 ```go
 arr := []int{2, 7, 3, 1}
-result := creek.FromArray(arr).RemoveIf(7, len(arr) == 4) // [2, 3, 1]
+result := creek.FromArray(arr).Contains(2) // true
 ```
 
-### RemoveWhere
-The `RemoveWhere` function removes all the entries that satisfy the provided condition.
+### Count
+The `Count` function returns the count of elements in the stream.
 ```go
-arr := []int{2, 7, 3, 1}
-result := creek.FromArray(arr).RemoveWhere(func(item int) bool {
-    return item > 2
-}) // [2, 1]
+arr := []int{3, 4, 1, 4, 2, 9}
+result := creek.FromArray(arr).Count() // 6
 ```
 
-### RemoveDuplicates
-The `RemoveDuplicates` function removes every duplicate item from the stream.
+### Distinct
+The `Distinct` function filters every distinct element from the stream.
 ```go
 arr := []int{2, 7, 3, 1, 3, 9, 3}
-result := creek.FromArray(arr).RemoveDuplicates() // [2, 7, 3, 1, 9]
-```
-
-### IndexOf
-The `IndexOf` function returns the position of the first occurrence of the passed value in a stream.
-```go
-arr := []int{3, 4, 1, 4, 2, 9}
-result := creek.FromArray(arr).IndexOf(4) // 1
-```
-
-### LastIndexOf
-The `LastIndexOf` function returns the position of the last occurrence of the passed value in a stream.
-```go
-arr := []int{3, 4, 1, 4, 2, 9}
-result := creek.FromArray(arr).LastIndexOf(4) // 3
+result := creek.FromArray(arr).Distinct() // [2, 7, 3, 1, 9]
 ```
 
 ### ElementAt
@@ -330,6 +264,32 @@ arr := []int{3, 4, 1, 4, 2, 9}
 result := creek.FromArray(arr).ElementAtOrElse(5, 100) // 9
 
 result2 = creek.FromArray(arr).ElementAtOrElse(6, 100) // 100
+```
+
+### Equals
+The `Equals` function compares two streams and returns true if they're equals.
+```go
+arr := []int{2, 7, 3, 1}
+result := creek.FromArray(arr).Equals(creek.Stream[int]{
+    Array: []int{2, 7, 3, 1},
+})
+// true
+```
+
+### Filter
+The `Filter` function leaves only those elements in the array that make the specified condition true.
+```go
+arr := []string{"One", "Two", "Three"}
+result := creek.FromArray(arr).Filter(func(item string) bool {
+    return strings.HasPrefix(item, "T")
+}) // [Two, Three]
+
+// ----------------------------------------------
+
+arr2 := []int{1, 4, 6, 2, 7, 3}
+result2 := creek.FromArray(arr2).Filter(func(item int) bool {
+    return item%2 == 0
+}) // [4, 6, 2]
 ```
 
 ### Find
@@ -372,6 +332,66 @@ result := creek.FromArray(arr).FindLastIndex(func(item int) bool {
 // 4
 ```
 
+### ForEach
+The `ForEach` method runs the specified method on every element in the Stream.  
+Warning: this method doesn't return anything
+```go
+arr := []string{"One", "Two", "Three"}
+creek.FromArray(arr).ForEach(func(item string) {
+    fmt.Println(item)
+})
+
+// -- Output: --
+// One
+// Two
+// Three
+```
+
+### IndexOf
+The `IndexOf` function returns the position of the first occurrence of the passed value in a stream.
+```go
+arr := []int{3, 4, 1, 4, 2, 9}
+result := creek.FromArray(arr).IndexOf(4) // 1
+```
+
+### IsEmpty
+The `IsEmpty` function checks whether the stream is empty.
+```go
+arr := []int{2, 7, 3, 1}
+result = creek.FromArray(arr).IsEmpty() // false
+```
+
+### Join
+The `Join` function concatenates the elements of the stream to create a single string.  
+The passed parameter is placed between the elements.
+```go
+arr := []int{2, 7, 3, 1}
+result := creek.FromArray(arr).Join(", ") // result: "2, 7, 3, 1"
+```
+
+### LastIndexOf
+The `LastIndexOf` function returns the position of the last occurrence of the passed value in a stream.
+```go
+arr := []int{3, 4, 1, 4, 2, 9}
+result := creek.FromArray(arr).LastIndexOf(4) // 3
+```
+
+### Limit
+The `Limit` function constrains the number of elements returned by the stream.
+```go
+arr := []int{2, 7, 3, 1}
+result := creek.FromArray(arr).Limit(2) // [2, 7]
+```
+
+### Map
+The `Map` function creates a new stream populated with the results of calling the provided function on every element.
+```go
+arr := []string{"One", "Two", "Three"}
+result := creek.FromArray(arr).Map(func(item string) string {
+    return strings.ToUpper(item)
+}) // [ONE, TWO, THREE]
+```
+
 ### Max
 The `Max` function returns the largest element from the stream.
 ```go
@@ -400,29 +420,70 @@ arr := []int{2, 7, 3, 1, 9, 12, 5}
 result := creek.FromArray(arr).MinIndex() // 3
 ```
 
+### OrderBy
+The `OrderBy` function sorts the stream in ascending order.  
+```go
+arr := []int{1, 8, 2, 14, 22, 4, 7, 92}
+result := creek.FromArray(arr).OrderBy() // [1, 2, 4, 7, 8, 14, 22, 92]
+```
+
+### OrderByDescending
+The `OrderByDescending` function sorts the stream in descending order.
+```go
+arr := []int{1, 8, 2, 14, 22, 4, 7, 92}
+result := creek.FromArray(arr).OrderByDescending() // [92, 22, 14, 8, 7, 4, 2, 1]
+```
+
+### Remove
+The `Remove` function removes the passed element from a stream.
+```go
+arr := []int{2, 7, 3, 1, 3}
+result = creek.FromArray(arr).Remove(3) // [2, 7, 1]
+```
+
+### RemoveAt
+The `RemoveAt` function removes the item if its index matches the index passed in.  
+If the index is out of range, nothing happens.
+```go
+arr := []int{2, 7, 3, 1}
+result := creek.FromArray(arr).RemoveAt(2) // [2, 7, 1]
+```
+
+### RemoveDuplicates
+The `RemoveDuplicates` function removes every duplicate item from the stream.
+```go
+arr := []int{2, 7, 3, 1, 3, 9, 3}
+result := creek.FromArray(arr).RemoveDuplicates() // [2, 7, 3, 1, 9]
+```
+
+### RemoveIf
+The `RemoveIf` function removes the passed element from a stream if the second parameter is true.
+```go
+arr := []int{2, 7, 3, 1}
+result := creek.FromArray(arr).RemoveIf(7, len(arr) == 4) // [2, 3, 1]
+```
+
+### RemoveWhere
+The `RemoveWhere` function removes all the entries that satisfy the provided condition.
+```go
+arr := []int{2, 7, 3, 1}
+result := creek.FromArray(arr).RemoveWhere(func(item int) bool {
+    return item > 2
+}) // [2, 1]
+```
+
+### Reverse
+The `Reverse` function reverses the stream.
+```go
+arr := []int{2, 7, 3, 1}
+result := creek.FromArray(arr).Reverse() // [1, 3, 7, 2]
+```
+
 ### Sum
 The `Sum` function adds up all values in a stream.
 ```go
 arr := []int{2, 7, 3, 1, 9, 12, 5}
 result := creek.FromArray(arr).Sum() // 39
-```
-
-### Average
-The `Average` function calculates the average of the stream.  
-This function doesn't work with strings.
-```go
-arr := []int{2, 7, 3, 1, 9, 12, 5}
-result := creek.FromArray(arr).Average() // 5.571428571428571
-```
-
-### All
-The `All` function determines whether all elements of the stream satisfy the passed condition.
-```go
-arr := []int{2, 7, 3, 1}
-result := creek.FromArray(arr).All(func(item int) bool {
-    return item%2 == 0
-}) 
-// false
 ```
 
 ### Some
@@ -433,67 +494,6 @@ result := creek.FromArray(arr).Some(func(item int) bool {
     return item%2 == 0
 })
 // true
-```
-
-### Equals
-The `Equals` function compares two streams and returns true if they're equals.
-```go
-arr := []int{2, 7, 3, 1}
-result := creek.FromArray(arr).Equals(creek.Stream[int]{
-    Array: []int{2, 7, 3, 1},
-})
-// true
-```
-
-### ArrEquals
-The `ArrEquals` function compares the stream and the passed array and returns true if they're equals.
-```go
-arr := []int{2, 7, 3, 1}
-result = creek.FromArray(arr).ArrEquals([]int{2, 7, 3, 2})
-// false
-```
-
-### Reverse
-The `Reverse` function reverses the stream.
-```go
-arr := []int{2, 7, 3, 1}
-result := creek.FromArray(arr).Reverse() // [1, 3, 7, 2]
-```
-
-### Join
-The `Join` function concatenates the elements of the stream to create a single string.  
-The passed parameter is placed between the elements.
-```go
-arr := []int{2, 7, 3, 1}
-result := creek.FromArray(arr).Join(", ") // result: "2, 7, 3, 1"
-```
-
-### Contains
-The `Contains` function checks whether the stream contains the passed item.
-```go
-arr := []int{2, 7, 3, 1}
-result := creek.FromArray(arr).Contains(2) // true
-```
-
-### Distinct
-The `Distinct` function filters every distinct element from the stream.
-```go
-arr := []int{2, 7, 3, 1, 3, 9, 3}
-result := creek.FromArray(arr).Distinct() // [2, 7, 3, 1, 9]
-```
-
-### IsEmpty
-The `IsEmpty` function checks whether the stream is empty.
-```go
-arr := []int{2, 7, 3, 1}
-result = creek.FromArray(arr).IsEmpty() // false
-```
-
-### Clear
-The `Clear` function clears every element from the stream.
-```go
-arr := []int{3, 4, 1, 4, 2, 9}
-result := creek.FromArray(arr).Clear() // []
 ```
 
 ### Wait
