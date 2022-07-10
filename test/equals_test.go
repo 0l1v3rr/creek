@@ -31,6 +31,28 @@ func TestEquals(t *testing.T) {
 	} else {
 		t.Errorf("Map FAILED - Expected: %v, got: %v", expected, result)
 	}
+
+	// ------------------
+
+	result2 := creek.FromStructs(GetTestStructArray()).Equals(creek.FromStructs(GetTestStructArray()))
+	expected2 := true
+
+	if reflect.DeepEqual(result2, expected2) {
+		t.Logf("Map PASSED - Expected: %v, got: %v", expected2, result2)
+	} else {
+		t.Errorf("Map FAILED - Expected: %v, got: %v", expected2, result2)
+	}
+
+	// ------------------
+
+	result2 = creek.FromStructs(GetTestStructArray()).ArrEquals(GetOtherStructArray())
+	expected2 = false
+
+	if reflect.DeepEqual(result2, expected2) {
+		t.Logf("Map PASSED - Expected: %v, got: %v", expected2, result2)
+	} else {
+		t.Errorf("Map FAILED - Expected: %v, got: %v", expected2, result2)
+	}
 }
 
 func TestArrEquals(t *testing.T) {

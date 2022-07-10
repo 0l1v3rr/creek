@@ -2,6 +2,7 @@ package creek
 
 import (
 	"fmt"
+	"reflect"
 	"strings"
 )
 
@@ -14,6 +15,19 @@ func (s Stream[T]) Reverse() Stream[T] {
 	}
 
 	return Stream[T]{
+		Array: result,
+	}
+}
+
+// The Reverse function reverses the stream.
+func (s StructStream[T]) Reverse() StructStream[T] {
+	result := []T{}
+
+	for i := len(s.Array) - 1; i >= 0; i-- {
+		result = append(result, s.Array[i])
+	}
+
+	return StructStream[T]{
 		Array: result,
 	}
 }
@@ -72,5 +86,33 @@ func (s Stream[T]) Clear() Stream[T] {
 
 // The Count function returns the count of elements in the stream.
 func (s Stream[T]) Count() int {
+	return len(s.Array)
+}
+
+// The Contains function checks whether the stream contains the passed item.
+func (s StructStream[T]) Contains(item T) bool {
+	for i := 0; i < len(s.Array); i++ {
+		if reflect.DeepEqual(s.Array[i], item) {
+			return true
+		}
+	}
+
+	return false
+}
+
+// The IsEmpty function checks whether the stream is empty.
+func (s StructStream[T]) IsEmpty() bool {
+	return len(s.Array) == 0
+}
+
+// The Clear function clears every element from the stream.
+func (s StructStream[T]) Clear() StructStream[T] {
+	return StructStream[T]{
+		Array: []T{},
+	}
+}
+
+// The Count function returns the count of elements in the stream.
+func (s StructStream[T]) Count() int {
 	return len(s.Array)
 }

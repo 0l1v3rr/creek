@@ -37,6 +37,7 @@
     - [Stream from regular arrays and slices](#stream-from-regular-arrays-and-slices)
     - [Stream from parameter values](#stream-from-parameter-values)
     - [Stream from a file](#stream-from-a-file)
+    - [Stream from struct arrays](#stream-from-struct-arrays)
   - [Functions](#functions)
     - [All](#all)
     - [Append](#append)
@@ -157,6 +158,41 @@ Parameters:
 ```go
 file, _ := os.Open("/path/to/file.txt")
 stream := creek.FromFile(file)
+```
+
+### Stream from struct arrays
+The `FromStruct` function creates a new stream from the given struct array.  
+If the given array is not made of struct, it throws an error.
+```go
+type YourStruct struct {
+	Id   int64
+	Name string
+}
+
+func yourFunction() {
+	structArray := []YourStruct{
+		{Id: 1, Name: "John"},
+		{Id: 2, Name: "Will"},
+		{Id: 3, Name: "Mark"},
+	}
+
+	structStream := creek.FromStructs(structArray)
+}
+```
+If you use this stream, there are some functions, where you need to pass the name of the field in order to work. 
+These functions are the following:  
+`Average`, `Max`, `MaxIndex`, `Min`, `MinIndex`, `OrderBy`, `OrderByDescending`, `Sum`.  
+For example:
+```go
+structArray := []YourStruct{
+    {Id: 1, Name: "John"},
+    {Id: 2, Name: "Will"},
+    {Id: 3, Name: "Mark"},
+}
+
+// The functions are case sensitive. 'name', 'nAme', or 'nAMe' won't work.
+// Make sure you spell it correctly, otherwise it throws an error.
+structStream := creek.FromStructs(structArray).OrderBy("Name")
 ```
 
 <hr>

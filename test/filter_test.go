@@ -19,4 +19,21 @@ func TestFilter(t *testing.T) {
 	} else {
 		t.Errorf("Map FAILED - Expected: %v, got: %v", expected, result)
 	}
+
+	// ------------
+
+	result2 := creek.FromStructs(GetTestStructArray()).Filter(func(item TestStruct) bool {
+		return item.Id < 3
+	}).Collect()
+
+	expected2 := []TestStruct{
+		{Id: 1, Name: "John"},
+		{Id: 2, Name: "Will"},
+	}
+
+	if reflect.DeepEqual(result, expected) {
+		t.Logf("Map PASSED - Expected: %v, got: %v", expected2, result2)
+	} else {
+		t.Errorf("Map FAILED - Expected: %v, got: %v", expected2, result2)
+	}
 }
