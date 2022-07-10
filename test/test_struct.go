@@ -16,7 +16,7 @@ func GetTestStructArray() []TestStruct {
 func GetOtherStructArray() []TestStruct {
 	return []TestStruct{
 		{Id: 12, Name: "Ian"},
-		{Id: 13, Name: "Josh"},
 		{Id: 14, Name: "Paul"},
+		{Id: 13, Name: "Josh"},
 	}
 }

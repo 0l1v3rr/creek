@@ -194,6 +194,10 @@ structArray := []YourStruct{
 // Make sure you spell it correctly, otherwise it throws an error.
 structStream := creek.FromStructs(structArray).OrderBy("Name")
 ```
+> Warning: this stream does not support 3 functions:
+> - `Distinct`
+> - `Join`
+> - `RemoveDuplicates`
 
 <hr>
 
