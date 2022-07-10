@@ -1,6 +1,7 @@
 package test
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 
@@ -8,79 +9,175 @@ import (
 )
 
 func TestFind(t *testing.T) {
-	result := creek.FromArray([]int{2, 7, 3, 1, 4}).Find(func(item int) bool {
-		return item%2 == 0
-	})
-	expected := 2
+	var tests = []struct {
+		array    []int
+		function func(item int) bool
+		expected int
+	}{
+		{
+			array: []int{2, 7, 3, 1, 4},
+			function: func(item int) bool {
+				return item%2 == 0
+			},
+			expected: 2,
+		},
+		{
+			array: []int{2, 7, 3, 1, 4},
+			function: func(item int) bool {
+				return item > 2
+			},
+			expected: 7,
+		},
+	}
 
-	if reflect.DeepEqual(result, expected) {
-		t.Logf("Map PASSED - Expected: %v, got: %v", expected, result)
-	} else {
-		t.Errorf("Map FAILED - Expected: %v, got: %v", expected, result)
+	counter := 0
+
+	for _, item := range tests {
+		counter++
+		testname := fmt.Sprintf("All(): #%v", counter)
+
+		t.Run(testname, func(t *testing.T) {
+			result := creek.FromArray(item.array).Find(item.function)
+			if reflect.DeepEqual(result, item.expected) {
+				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
+				return
+			}
+
+			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
+		})
 	}
 }
 
 func TestFindIndex(t *testing.T) {
-	result := creek.FromArray([]int{2, 7, 3, 1, 4}).FindIndex(func(item int) bool {
-		return item%2 == 0
-	})
-	expected := 0
-
-	if reflect.DeepEqual(result, expected) {
-		t.Logf("Map PASSED - Expected: %v, got: %v", expected, result)
-	} else {
-		t.Errorf("Map FAILED - Expected: %v, got: %v", expected, result)
+	var tests = []struct {
+		array    []int
+		function func(item int) bool
+		expected int
+	}{
+		{
+			array: []int{2, 7, 3, 1, 4},
+			function: func(item int) bool {
+				return item%2 == 0
+			},
+			expected: 0,
+		},
+		{
+			array: []int{2, 7, 3, 1, 4},
+			function: func(item int) bool {
+				return item > 2
+			},
+			expected: 1,
+		},
+		{
+			array: []int{2, 7, 3, 1, 4},
+			function: func(item int) bool {
+				return item > 100
+			},
+			expected: -1,
+		},
 	}
 
-	// ----------------------
+	counter := 0
 
-	result = creek.FromArray([]int{2, 7, 3, 1, 4}).FindIndex(func(item int) bool {
-		return item > 100
-	})
-	expected = -1
+	for _, item := range tests {
+		counter++
+		testname := fmt.Sprintf("All(): #%v", counter)
 
-	if reflect.DeepEqual(result, expected) {
-		t.Logf("Map PASSED - Expected: %v, got: %v", expected, result)
-	} else {
-		t.Errorf("Map FAILED - Expected: %v, got: %v", expected, result)
+		t.Run(testname, func(t *testing.T) {
+			result := creek.FromArray(item.array).FindIndex(item.function)
+			if reflect.DeepEqual(result, item.expected) {
+				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
+				return
+			}
+
+			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
+		})
 	}
 }
 
 func TestFindLast(t *testing.T) {
-	result := creek.FromArray([]int{2, 7, 3, 1, 4}).FindLast(func(item int) bool {
-		return item%2 == 0
-	})
-	expected := 4
+	var tests = []struct {
+		array    []int
+		function func(item int) bool
+		expected int
+	}{
+		{
+			array: []int{2, 7, 3, 1, 4},
+			function: func(item int) bool {
+				return item%2 == 0
+			},
+			expected: 4,
+		},
+		{
+			array: []int{2, 7, 3, 1, 4},
+			function: func(item int) bool {
+				return item > 3
+			},
+			expected: 4,
+		},
+	}
 
-	if reflect.DeepEqual(result, expected) {
-		t.Logf("Map PASSED - Expected: %v, got: %v", expected, result)
-	} else {
-		t.Errorf("Map FAILED - Expected: %v, got: %v", expected, result)
+	counter := 0
+
+	for _, item := range tests {
+		counter++
+		testname := fmt.Sprintf("All(): #%v", counter)
+
+		t.Run(testname, func(t *testing.T) {
+			result := creek.FromArray(item.array).FindLast(item.function)
+			if reflect.DeepEqual(result, item.expected) {
+				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
+				return
+			}
+
+			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
+		})
 	}
 }
 
 func TestFindLastIndex(t *testing.T) {
-	result := creek.FromArray([]int{2, 7, 3, 1, 4}).FindLastIndex(func(item int) bool {
-		return item%2 == 0
-	})
-	expected := 4
-
-	if reflect.DeepEqual(result, expected) {
-		t.Logf("Map PASSED - Expected: %v, got: %v", expected, result)
-	} else {
-		t.Errorf("Map FAILED - Expected: %v, got: %v", expected, result)
+	var tests = []struct {
+		array    []int
+		function func(item int) bool
+		expected int
+	}{
+		{
+			array: []int{2, 7, 3, 1, 4},
+			function: func(item int) bool {
+				return item%2 == 0
+			},
+			expected: 4,
+		},
+		{
+			array: []int{2, 7, 3, 1, 4},
+			function: func(item int) bool {
+				return item > 2
+			},
+			expected: 4,
+		},
+		{
+			array: []int{2, 7, 3, 1, 4},
+			function: func(item int) bool {
+				return item > 100
+			},
+			expected: -1,
+		},
 	}
 
-	// ----------------------
+	counter := 0
 
-	result = creek.FromArray([]int{2, 7, 3, 1, 4}).FindLastIndex(func(item int) bool {
-		return item > 100
-	})
-	expected = -1
+	for _, item := range tests {
+		counter++
+		testname := fmt.Sprintf("All(): #%v", counter)
 
-	if reflect.DeepEqual(result, expected) {
-		t.Logf("Map PASSED - Expected: %v, got: %v", expected, result)
-	} else {
-		t.Errorf("Map FAILED - Expected: %v, got: %v", expected, result)
+		t.Run(testname, func(t *testing.T) {
+			result := creek.FromArray(item.array).FindLastIndex(item.function)
+			if reflect.DeepEqual(result, item.expected) {
+				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
+				return
+			}
+
+			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
+		})
 	}
 }

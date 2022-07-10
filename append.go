@@ -42,31 +42,26 @@ func (s StructStream[T]) AppendIf(item T, c bool) StructStream[T] {
 
 // The AppendAt function inserts the specified element at the specified position in the stream.
 func (s Stream[T]) AppendAt(index int, item T) Stream[T] {
-	len := len(s.Array)
-	if index >= len {
-		return s
-	}
-
-	result := []T{}
-
-	for i := 0; i < len; i++ {
-		if i == index {
-			result = append(result, item)
-		}
-
-		result = append(result, s.Array[i])
-	}
-
 	return Stream[T]{
-		Array: result,
+		Array: appendAt(index, item, s.Array),
 	}
 }
 
 // The AppendAt function inserts the specified element at the specified position in the stream.
 func (s StructStream[T]) AppendAt(index int, item T) StructStream[T] {
-	len := len(s.Array)
-	if index >= len {
-		return s
+	return StructStream[T]{
+		Array: appendAt(index, item, s.Array),
+	}
+}
+
+func appendAt[T interface{}](index int, item T, arr []T) []T {
+	len := len(arr)
+	if index == len {
+		return append(arr, item)
+	}
+
+	if index > len {
+		return arr
 	}
 
 	result := []T{}
@@ -76,10 +71,8 @@ func (s StructStream[T]) AppendAt(index int, item T) StructStream[T] {
 			result = append(result, item)
 		}
 
-		result = append(result, s.Array[i])
+		result = append(result, arr[i])
 	}
 
-	return StructStream[T]{
-		Array: result,
-	}
+	return result
 }

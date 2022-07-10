@@ -1,6 +1,7 @@
 package test
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 
@@ -8,34 +9,87 @@ import (
 )
 
 func TestElementAt(t *testing.T) {
-	result := creek.FromArray([]int{3, 4, 1, 4, 2, 9}).ElementAt(2)
-	expected := 1
+	var tests = []struct {
+		array    []int
+		index    int
+		expected int
+	}{
+		{
+			array:    []int{3, 4, 1, 4, 2, 9},
+			index:    2,
+			expected: 1,
+		},
+		{
+			array:    []int{3, 4, 1, 4, 2, 9},
+			index:    5,
+			expected: 9,
+		},
+		{
+			array:    []int{3, 4, 1, 4, 2, 9},
+			index:    0,
+			expected: 3,
+		},
+	}
 
-	if reflect.DeepEqual(result, expected) {
-		t.Logf("Map PASSED - Expected: %v, got: %v", expected, result)
-	} else {
-		t.Errorf("Map FAILED - Expected: %v, got: %v", expected, result)
+	counter := 0
+
+	for _, item := range tests {
+		counter++
+		testname := fmt.Sprintf("All(): #%v", counter)
+
+		t.Run(testname, func(t *testing.T) {
+			result := creek.FromArray(item.array).ElementAt(item.index)
+			if reflect.DeepEqual(result, item.expected) {
+				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
+				return
+			}
+
+			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
+		})
 	}
 }
 
 func TestElementAtOrElse(t *testing.T) {
-	result := creek.FromArray([]int{3, 4, 1, 4, 2, 9}).ElementAtOrElse(5, 100)
-	expected := 9
-
-	if reflect.DeepEqual(result, expected) {
-		t.Logf("Map PASSED - Expected: %v, got: %v", expected, result)
-	} else {
-		t.Errorf("Map FAILED - Expected: %v, got: %v", expected, result)
+	var tests = []struct {
+		array    []int
+		index    int
+		orElse   int
+		expected int
+	}{
+		{
+			array:    []int{3, 4, 1, 4, 2, 9},
+			index:    2,
+			orElse:   101,
+			expected: 1,
+		},
+		{
+			array:    []int{3, 4, 1, 4, 2, 9},
+			index:    5,
+			orElse:   101,
+			expected: 9,
+		},
+		{
+			array:    []int{3, 4, 1, 4, 2, 9},
+			index:    101,
+			orElse:   101,
+			expected: 101,
+		},
 	}
 
-	// ----------------
+	counter := 0
 
-	result = creek.FromArray([]int{3, 4, 1, 4, 2, 9}).ElementAtOrElse(6, 100)
-	expected = 100
+	for _, item := range tests {
+		counter++
+		testname := fmt.Sprintf("All(): #%v", counter)
 
-	if reflect.DeepEqual(result, expected) {
-		t.Logf("Map PASSED - Expected: %v, got: %v", expected, result)
-	} else {
-		t.Errorf("Map FAILED - Expected: %v, got: %v", expected, result)
+		t.Run(testname, func(t *testing.T) {
+			result := creek.FromArray(item.array).ElementAtOrElse(item.index, item.orElse)
+			if reflect.DeepEqual(result, item.expected) {
+				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
+				return
+			}
+
+			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
+		})
 	}
 }

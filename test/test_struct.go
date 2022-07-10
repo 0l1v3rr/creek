@@ -20,3 +20,11 @@ func GetOtherStructArray() []TestStruct {
 		{Id: 13, Name: "Josh"},
 	}
 }
+
+func GetTestStructItem() TestStruct {
+	return TestStruct{Id: 12, Name: "Ian"}
+}
+
+func GetOtherStructItem() TestStruct {
+	return TestStruct{Id: 13, Name: "Josh"}
+}
