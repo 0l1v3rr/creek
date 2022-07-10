@@ -2,10 +2,11 @@
     <img src="./images/logo.png" width="320px" alt="Creek Logo">
 </div>
 <div align="center">
-    <a href="https://github.com/0l1v3rr/creek">Creek</a> is a tiny, fully-featured Streams library 
+    <a href="https://github.com/0l1v3rr/creek">Creek</a> is a fully-featured Streams library 
     for <a href="https://go.dev/">Go</a>. <br>
     Creek creates wrappers around a specific data source (array or slice), allowing us to operate with that data source and making bulk processing convenient and fast.
-    Creek helps you to follow the functional programming paradigms.    
+    Creek helps you to follow the <a href="https://en.wikipedia.org/wiki/Functional_programming">functional programming</a> paradigms.   
+    Creek is not just a Streams library, you can work with arrays and slices more easily than ever.
 </div>
 <br>
 <div align="center">
@@ -28,10 +29,49 @@
 
 <hr>
 
+## Why creek?
+If you've always missed the functional programming paradigms from Golang, or ever wanted to work with streams in Go, this library will totally fit your needs.  
+If you are from a [C#](https://docs.microsoft.com/en-us/dotnet/csharp/) or a [Java](https://www.java.com/en/) background, working with this library going to be easy since creek is very similar to [Linq](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/) or the [Java Streams API](https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html).  
+Even if you just want to work with slices and arrays more conveniently and easily, but don't like functional programming, you can do that too.
+
+<hr>
+
+## Installation
+Before installing this library, you need to have [Go](https://go.dev/dl/) installed.  
+> Since creek uses generics, version 1.18+ is required.  
+
+Now, you can initialize a project and use this library:  
+```sh
+go get -u github.com/0l1v3rr/creek
+```
+
+<hr>
+
+## Quick start
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/0l1v3rr/creek"
+)
+
+func main() {
+	arr := []int{1, 8, 2, 14, 22, 4, 7, 92}
+
+	result := creek.FromArray(arr).Filter(func(item int) bool {
+        return item > 3
+    }).OrderBy().Collect()
+
+	fmt.Println(result) // [4 7 8 14 22 92]
+}
+```
+
+<hr>
+
 # Table of Contents
 - [Table of Contents](#table-of-contents)
-  - [Installation](#installation)
-  - [Quick start](#quick-start)
   - [Create stream](#create-stream)
     - [Empty stream](#empty-stream)
     - [Stream from regular arrays and slices](#stream-from-regular-arrays-and-slices)
@@ -82,41 +122,12 @@
     - [Wait](#wait)
   - [Method chaining](#method-chaining)
   - [Download and build from source](#download-and-build-from-source)
+  - [Creek VS Linq VS Java Streams API](#creek-vs-linq-vs-java-streams-api)
+    - [Linq](#linq)
+    - [Java Streams API](#java-streams-api)
+    - [Creek](#creek)
   - [Contributing](#contributing)
   - [License](#license)
-
-<hr>
-
-## Installation
-Before installing this library, you need to have [Go](https://go.dev/dl/) installed.  
-Since creek uses generics, version 1.18+ is required.  
-Now, you can use this command:
-```sh
-go get -u github.com/0l1v3rr/creek
-```
-
-<hr>
-
-## Quick start
-```go
-package main
-
-import (
-	"fmt"
-
-	"github.com/0l1v3rr/creek"
-)
-
-func main() {
-	arr := []int{1, 8, 2, 14, 22, 4, 7, 92}
-
-	result := creek.FromArray(arr).Filter(func(item int) bool {
-        return item > 3
-    }).OrderBy().Collect()
-
-	fmt.Println(result) // [4 7 8 14 22 92]
-}
-```
 
 <hr>
 
@@ -131,9 +142,9 @@ emptyStream := creek.Empty[int]()
 
 ### Stream from regular arrays and slices
 The supported types are the following:
-```go
-string | byte | float32 | float64 | int | int16 | int32 | int64 | uint16 | uint32 | uint64
-```
+> ```go
+> string | byte | float32 | float64 | int | int16 | int32 | int64 | uint16 | uint32 | uint64
+> ```
 In order to create a stream, use the `FromArray` function:
 ```go
 // slice
@@ -581,7 +592,60 @@ cd creek
 
 <hr>
 
+## Creek VS Linq VS Java Streams API
+Creek is quite similar compared to these libraries.  
+Here you can see the similarities between Creek, Linq, and Java Streams API.  
+The expected output is the following:
+```
+4
+8
+12
+16
+```
+
+### Linq
+```cs
+List<int> list = new List<int>{ 1, 7, 2, 5, 9, 6, 3, 4, 8 };
+var result = list
+    .Where(num => num % 2 == 0)
+    .Select(num => num * 2)
+    .OrderBy(num => num)
+    .ToList();
+
+result.ForEach(num => Console.WriteLine(num));
+```
+
+### Java Streams API
+```java
+List<Integer> list = List.of(1, 7, 2, 5, 9, 6, 3, 4, 8);
+List<Integer> result = list
+        .stream()
+        .filter(num -> num % 2 == 0)
+        .map(num -> num * 2)
+        .sorted()
+        .toList();
+
+result.forEach(System.out::println);
+```
+
+### Creek
+```go
+list := creek.FromValues(1, 7, 2, 5, 9, 6, 3, 4, 8)
+result := list.Filter(func(item int) bool {
+    return item%2 == 0
+}).Map(func(item int) int {
+    return item * 2
+}).OrderBy().Collect()
+
+creek.FromArray(result).ForEach(func(item int) {
+    fmt.Println(item)
+})
+```
+
+<hr>
+
 ## Contributing
+Every contribution is welcomed.  
 You can find [here](CONTRIBUTING.md) a contributing guideline.  
 A star would be appreciated as well. 😉
 
