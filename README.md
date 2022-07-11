@@ -52,19 +52,19 @@ go get -u github.com/0l1v3rr/creek
 package main
 
 import (
-	"fmt"
+    "fmt"
 
-	"github.com/0l1v3rr/creek"
+    "github.com/0l1v3rr/creek"
 )
 
 func main() {
-	arr := []int{1, 8, 2, 14, 22, 4, 7, 92}
+    arr := []int{1, 8, 2, 14, 22, 4, 7, 92}
 
     result := creek.FromArray(arr).Filter(func(item int) bool {
         return item > 3
     }).OrderBy().Collect()
 
-	fmt.Println(result) // [4 7 8 14 22 92]
+    fmt.Println(result) // [4 7 8 14 22 92]
 }
 ```
 
@@ -122,6 +122,7 @@ func main() {
     - [RemoveWhere](#removewhere)
     - [Reverse](#reverse)
     - [Sum](#sum)
+    - [Shuffle](#shuffle)
     - [Some](#some)
     - [Wait](#wait)
   - [Method chaining](#method-chaining)
@@ -565,6 +566,13 @@ The `Sum` function adds up all values in a stream.
 ```go
 arr := []int{2, 7, 3, 1, 9, 12, 5}
 result := creek.FromArray(arr).Sum() // 39
+```
+
+### Shuffle
+The `Shuffle` function shuffles the stream.
+```go
+arr := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
+result := creek.FromArray(arr).Shuffle() // [7, 2, 8, 1, 9, 5, 6, 3, 4]
 ```
 
 ### Some
