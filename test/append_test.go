@@ -30,7 +30,7 @@ func TestAppend(t *testing.T) {
 
 	for _, item := range tests {
 		counter++
-		testname := fmt.Sprintf("All(): #%v", counter)
+		testname := fmt.Sprintf("Append(): #%v", counter)
 
 		t.Run(testname, func(t *testing.T) {
 			result := creek.FromArray(item.array).Append(item.toAppend).Collect()
@@ -87,7 +87,7 @@ func TestAppendAt(t *testing.T) {
 
 	for _, item := range tests {
 		counter++
-		testname := fmt.Sprintf("All(): #%v", counter)
+		testname := fmt.Sprintf("AppendAt(): #%v", counter)
 
 		t.Run(testname, func(t *testing.T) {
 			result := creek.FromArray(item.array).AppendAt(item.appendIndex, item.toAppend).Collect()
@@ -126,7 +126,7 @@ func TestAppendIf(t *testing.T) {
 
 	for _, item := range tests {
 		counter++
-		testname := fmt.Sprintf("All(): #%v", counter)
+		testname := fmt.Sprintf("AppendIf(): #%v", counter)
 
 		t.Run(testname, func(t *testing.T) {
 			result := creek.FromArray(item.array).AppendIf(item.toAppend, item.shouldAppend).Collect()

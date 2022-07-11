@@ -34,7 +34,7 @@ func TestFilter(t *testing.T) {
 
 	for _, item := range tests {
 		counter++
-		testname := fmt.Sprintf("All(): #%v", counter)
+		testname := fmt.Sprintf("Filter(): #%v", counter)
 
 		t.Run(testname, func(t *testing.T) {
 			result := creek.FromArray(item.array).Filter(item.function).Collect()
@@ -72,7 +72,7 @@ func TestFilter(t *testing.T) {
 
 	for _, item := range tests2 {
 		counter++
-		testname := fmt.Sprintf("All(): #%v", counter)
+		testname := fmt.Sprintf("Filter(): #%v", counter)
 
 		t.Run(testname, func(t *testing.T) {
 			result := creek.FromStructs(item.array).Filter(item.function).Collect()

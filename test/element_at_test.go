@@ -35,7 +35,7 @@ func TestElementAt(t *testing.T) {
 
 	for _, item := range tests {
 		counter++
-		testname := fmt.Sprintf("All(): #%v", counter)
+		testname := fmt.Sprintf("ElementAt(): #%v", counter)
 
 		t.Run(testname, func(t *testing.T) {
 			result := creek.FromArray(item.array).ElementAt(item.index)
@@ -80,7 +80,7 @@ func TestElementAtOrElse(t *testing.T) {
 
 	for _, item := range tests {
 		counter++
-		testname := fmt.Sprintf("All(): #%v", counter)
+		testname := fmt.Sprintf("ElementAtOrElse(): #%v", counter)
 
 		t.Run(testname, func(t *testing.T) {
 			result := creek.FromArray(item.array).ElementAtOrElse(item.index, item.orElse)
@@ -117,7 +117,7 @@ func TestFirst(t *testing.T) {
 
 	for _, item := range tests {
 		counter++
-		testname := fmt.Sprintf("All(): #%v", counter)
+		testname := fmt.Sprintf("First(): #%v", counter)
 
 		t.Run(testname, func(t *testing.T) {
 			result := creek.FromArray(item.array).First()
@@ -154,7 +154,7 @@ func TestLast(t *testing.T) {
 
 	for _, item := range tests {
 		counter++
-		testname := fmt.Sprintf("All(): #%v", counter)
+		testname := fmt.Sprintf("Last(): #%v", counter)
 
 		t.Run(testname, func(t *testing.T) {
 			result := creek.FromArray(item.array).Last()

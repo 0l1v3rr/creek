@@ -30,7 +30,7 @@ func TestEquals(t *testing.T) {
 
 	for _, item := range tests {
 		counter++
-		testname := fmt.Sprintf("All(): #%v", counter)
+		testname := fmt.Sprintf("Equals(): #%v", counter)
 
 		t.Run(testname, func(t *testing.T) {
 			result := creek.FromArray(item.array).Equals(item.stream)
@@ -64,7 +64,7 @@ func TestEquals(t *testing.T) {
 
 	for _, item := range tests2 {
 		counter++
-		testname := fmt.Sprintf("All(): #%v", counter)
+		testname := fmt.Sprintf("Equals(): #%v", counter)
 
 		t.Run(testname, func(t *testing.T) {
 			result := creek.FromStructs(item.array).Equals(item.stream)
@@ -100,7 +100,7 @@ func TestArrEquals(t *testing.T) {
 
 	for _, item := range tests {
 		counter++
-		testname := fmt.Sprintf("All(): #%v", counter)
+		testname := fmt.Sprintf("ArrEquals(): #%v", counter)
 
 		t.Run(testname, func(t *testing.T) {
 			result := creek.FromArray(item.array).ArrEquals(item.stream)
@@ -134,7 +134,7 @@ func TestArrEquals(t *testing.T) {
 
 	for _, item := range tests2 {
 		counter++
-		testname := fmt.Sprintf("All(): #%v", counter)
+		testname := fmt.Sprintf("ArrEquals(): #%v", counter)
 
 		t.Run(testname, func(t *testing.T) {
 			result := creek.FromStructs(item.array).ArrEquals(item.stream)

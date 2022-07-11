@@ -34,7 +34,7 @@ func TestFind(t *testing.T) {
 
 	for _, item := range tests {
 		counter++
-		testname := fmt.Sprintf("All(): #%v", counter)
+		testname := fmt.Sprintf("Find(): #%v", counter)
 
 		t.Run(testname, func(t *testing.T) {
 			result := creek.FromArray(item.array).Find(item.function)
@@ -81,7 +81,7 @@ func TestFindIndex(t *testing.T) {
 
 	for _, item := range tests {
 		counter++
-		testname := fmt.Sprintf("All(): #%v", counter)
+		testname := fmt.Sprintf("FindIndex(): #%v", counter)
 
 		t.Run(testname, func(t *testing.T) {
 			result := creek.FromArray(item.array).FindIndex(item.function)
@@ -121,7 +121,7 @@ func TestFindLast(t *testing.T) {
 
 	for _, item := range tests {
 		counter++
-		testname := fmt.Sprintf("All(): #%v", counter)
+		testname := fmt.Sprintf("FindLast(): #%v", counter)
 
 		t.Run(testname, func(t *testing.T) {
 			result := creek.FromArray(item.array).FindLast(item.function)
@@ -168,7 +168,7 @@ func TestFindLastIndex(t *testing.T) {
 
 	for _, item := range tests {
 		counter++
-		testname := fmt.Sprintf("All(): #%v", counter)
+		testname := fmt.Sprintf("FindLastIndex(): #%v", counter)
 
 		t.Run(testname, func(t *testing.T) {
 			result := creek.FromArray(item.array).FindLastIndex(item.function)
