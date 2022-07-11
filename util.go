@@ -77,6 +77,11 @@ func (s Stream[T]) IsEmpty() bool {
 	return len(s.Array) == 0
 }
 
+// The IsNotEmpty function checks whether the stream is not empty.
+func (s Stream[T]) IsNotEmpty() bool {
+	return len(s.Array) != 0
+}
+
 // The Clear function clears every element from the stream.
 func (s Stream[T]) Clear() Stream[T] {
 	return Stream[T]{
@@ -103,6 +108,11 @@ func (s StructStream[T]) Contains(item T) bool {
 // The IsEmpty function checks whether the stream is empty.
 func (s StructStream[T]) IsEmpty() bool {
 	return len(s.Array) == 0
+}
+
+// The IsNotEmpty function checks whether the stream is not empty.
+func (s StructStream[T]) IsNotEmpty() bool {
+	return len(s.Array) != 0
 }
 
 // The Clear function clears every element from the stream.

@@ -31,3 +31,23 @@ func (s StructStream[T]) ElementAtOrElse(index int, elseValue T) T {
 
 	return s.Array[index]
 }
+
+// The First method returns the first element in the stream.
+func (s Stream[T]) First() T {
+	return s.Array[0]
+}
+
+// The First method returns the first element in the stream.
+func (s StructStream[T]) First() T {
+	return s.Array[0]
+}
+
+// The Last method returns the last element in the stream.
+func (s Stream[T]) Last() T {
+	return s.Array[len(s.Array)-1]
+}
+
+// The Last method returns the last element in the stream.
+func (s StructStream[T]) Last() T {
+	return s.Array[len(s.Array)-1]
+}

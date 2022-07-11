@@ -93,3 +93,77 @@ func TestElementAtOrElse(t *testing.T) {
 		})
 	}
 }
+
+func TestFirst(t *testing.T) {
+	var tests = []struct {
+		array    []int
+		expected int
+	}{
+		{
+			array:    []int{9, 3, 4, 1, 4, 2, 9, 7},
+			expected: 9,
+		},
+		{
+			array:    []int{2, 3, 4, 1, 4, 2, 9},
+			expected: 2,
+		},
+		{
+			array:    []int{3, 4, 1, 4, 2, 9, 43},
+			expected: 3,
+		},
+	}
+
+	counter := 0
+
+	for _, item := range tests {
+		counter++
+		testname := fmt.Sprintf("All(): #%v", counter)
+
+		t.Run(testname, func(t *testing.T) {
+			result := creek.FromArray(item.array).First()
+			if reflect.DeepEqual(result, item.expected) {
+				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
+				return
+			}
+
+			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
+		})
+	}
+}
+
+func TestLast(t *testing.T) {
+	var tests = []struct {
+		array    []int
+		expected int
+	}{
+		{
+			array:    []int{9, 3, 4, 1, 4, 2, 9, 7},
+			expected: 7,
+		},
+		{
+			array:    []int{2, 3, 4, 1, 4, 2, 9},
+			expected: 9,
+		},
+		{
+			array:    []int{3, 4, 1, 4, 2, 9, 43},
+			expected: 43,
+		},
+	}
+
+	counter := 0
+
+	for _, item := range tests {
+		counter++
+		testname := fmt.Sprintf("All(): #%v", counter)
+
+		t.Run(testname, func(t *testing.T) {
+			result := creek.FromArray(item.array).Last()
+			if reflect.DeepEqual(result, item.expected) {
+				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
+				return
+			}
+
+			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
+		})
+	}
+}

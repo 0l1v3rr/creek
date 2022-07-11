@@ -60,7 +60,7 @@ import (
 func main() {
 	arr := []int{1, 8, 2, 14, 22, 4, 7, 92}
 
-	result := creek.FromArray(arr).Filter(func(item int) bool {
+    result := creek.FromArray(arr).Filter(func(item int) bool {
         return item > 3
     }).OrderBy().Collect()
 
@@ -78,6 +78,7 @@ func main() {
     - [Stream from parameter values](#stream-from-parameter-values)
     - [Stream from a file](#stream-from-a-file)
     - [Stream from struct arrays](#stream-from-struct-arrays)
+  - [Important](#important)
   - [Functions](#functions)
     - [All](#all)
     - [Append](#append)
@@ -98,10 +99,13 @@ func main() {
     - [FindIndex](#findindex)
     - [FindLast](#findlast)
     - [FindLastIndex](#findlastindex)
+    - [First](#first)
     - [ForEach](#foreach)
     - [IndexOf](#indexof)
     - [IsEmpty](#isempty)
+    - [IsNotEmpty](#isnotempty)
     - [Join](#join)
+    - [Last](#last)
     - [LastIndexOf](#lastindexof)
     - [Limit](#limit)
     - [Map](#map)
@@ -209,6 +213,11 @@ structStream := creek.FromStructs(structArray).OrderBy("Name")
 > - `Distinct`
 > - `Join`
 > - `RemoveDuplicates`
+
+<hr>
+
+## Important
+> The functions do not modify the original array or the previous stream. Most of the functions return a new stream.
 
 <hr>
 
@@ -383,6 +392,13 @@ result := creek.FromArray(arr).FindLastIndex(func(item int) bool {
 // 4
 ```
 
+### First
+The `First` method returns the first element in the stream.
+```go
+res := []int{2, 7, 3, 1, 4}
+result := creek.FromArray(arr).First() // 2
+```
+
 ### ForEach
 The `ForEach` method runs the specified method on every element in the Stream.  
 Warning: this method doesn't return anything
@@ -412,12 +428,26 @@ arr := []int{2, 7, 3, 1}
 result = creek.FromArray(arr).IsEmpty() // false
 ```
 
+### IsNotEmpty
+The `IsNotEmpty` function checks whether the stream is not empty.
+```go
+arr := []int{2, 7, 3, 1}
+result = creek.FromArray(arr).IsEmpty() // true
+```
+
 ### Join
 The `Join` function concatenates the elements of the stream to create a single string.  
 The passed parameter is placed between the elements.
 ```go
 arr := []int{2, 7, 3, 1}
 result := creek.FromArray(arr).Join(", ") // result: "2, 7, 3, 1"
+```
+
+### Last
+The `Last` method returns the last element in the stream.
+```go
+arr := []int{2, 7, 3, 1}
+result := creek.FromArray(arr).Last() // 1
 ```
 
 ### LastIndexOf
