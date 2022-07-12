@@ -696,14 +696,14 @@ result.forEach(System.out::println);
 ### Creek
 ```go
 list := creek.FromValues(1, 7, 2, 5, 9, 6, 3, 4, 8)
-result := list.Filter(func(item int) bool {
-    return item%2 == 0
-}).Map(func(item int) int {
-    return item * 2
+result := list.Filter(func(num int) bool {
+    return num%2 == 0
+}).Map(func(num int) int {
+    return num * 2
 }).OrderBy().Collect()
 
-creek.FromArray(result).ForEach(func(item int) {
-    fmt.Println(item)
+creek.FromArray(result).ForEach(func(num int) {
+    fmt.Println(num)
 })
 ```
 
