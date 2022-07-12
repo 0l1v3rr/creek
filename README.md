@@ -121,9 +121,10 @@ func main() {
     - [RemoveIf](#removeif)
     - [RemoveWhere](#removewhere)
     - [Reverse](#reverse)
-    - [Sum](#sum)
     - [Shuffle](#shuffle)
+    - [Slice](#slice)
     - [Some](#some)
+    - [Sum](#sum)
     - [Wait](#wait)
   - [Method chaining](#method-chaining)
   - [Download and build from source](#download-and-build-from-source)
@@ -561,18 +562,18 @@ arr := []int{2, 7, 3, 1}
 result := creek.FromArray(arr).Reverse() // [1, 3, 7, 2]
 ```
 
-### Sum
-The `Sum` function adds up all values in a stream.
-```go
-arr := []int{2, 7, 3, 1, 9, 12, 5}
-result := creek.FromArray(arr).Sum() // 39
-```
-
 ### Shuffle
 The `Shuffle` function shuffles the stream.
 ```go
 arr := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
 result := creek.FromArray(arr).Shuffle() // [7, 2, 8, 1, 9, 5, 6, 3, 4]
+```
+
+### Slice
+The `Slice` function returns a copy of a portion of a stream into a new stream selected from start to end (end not included) where start and end represent the index of items in the stream.
+```go
+arr := []int{2, 7, 3, 1, 6, 3, 4, 12, 9, 13, 73, 17}
+result := creek.FromArray(arr).Slice(4, 10) // [6, 3, 4, 12, 9, 13]
 ```
 
 ### Some
@@ -583,6 +584,13 @@ result := creek.FromArray(arr).Some(func(item int) bool {
     return item%2 == 0
 })
 // true
+```
+
+### Sum
+The `Sum` function adds up all values in a stream.
+```go
+arr := []int{2, 7, 3, 1, 9, 12, 5}
+result := creek.FromArray(arr).Sum() // 39
 ```
 
 ### Wait
