@@ -120,6 +120,8 @@ func main() {
     - [RemoveDuplicates](#removeduplicates)
     - [RemoveIf](#removeif)
     - [RemoveWhere](#removewhere)
+    - [Replace](#replace)
+    - [ReplaceWhere](#replacewhere)
     - [Reverse](#reverse)
     - [Shuffle](#shuffle)
     - [Slice](#slice)
@@ -553,6 +555,23 @@ arr := []int{2, 7, 3, 1}
 result := creek.FromArray(arr).RemoveWhere(func(item int) bool {
     return item > 2
 }) // [2, 1]
+```
+
+### Replace
+The `Replace` function replaces every occurrence of `from` to `to`.  
+The first parameter is `from`, and the second is `to`.
+```go
+arr := []int{2, 7, 3, 1, 3}
+result := creek.FromArray(arr).Replace(3, 2) // [2, 7, 2, 1, 2]
+```
+
+### ReplaceWhere
+The `ReplaceWhere` function replaces every element that satisfies the condition.
+```go
+arr := []int{2, 7, 3, 1}
+result := creek.FromArray(arr).ReplaceWhere(func(item int) bool {
+    return item%2 == 0
+}, 3) // [3, 7, 3, 1]
 ```
 
 ### Reverse
