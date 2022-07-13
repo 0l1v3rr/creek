@@ -86,6 +86,7 @@ func main() {
     - [AppendIf](#appendif)
     - [ArrEquals](#arrequals)
     - [Average](#average)
+    - [BinarySearch](#binarysearch)
     - [Clear](#clear)
     - [Collect](#collect)
     - [Contains](#contains)
@@ -217,6 +218,7 @@ structStream := creek.FromStructs(structArray).OrderBy("Name")
 > - `Distinct`
 > - `Join`
 > - `RemoveDuplicates`
+> - `BinarySearch`
 
 <hr>
 
@@ -274,6 +276,14 @@ This function doesn't work with strings.
 ```go
 arr := []int{2, 7, 3, 1, 9, 12, 5}
 result := creek.FromArray(arr).Average() // 5.571428571428571
+```
+
+### BinarySearch
+The `BinarySearch` function finds the index of a target value within a **sorted** stream.  
+If the item is not present, it returns -1.
+```go
+arr := []int{1, 2, 3, 5, 7, 9, 12}
+result := creek.FromArray(arr).BinarySearch(3) // 2
 ```
 
 ### Clear
