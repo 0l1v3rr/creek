@@ -1,6 +1,7 @@
 package test
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 
@@ -8,111 +9,226 @@ import (
 )
 
 func TestReverse(t *testing.T) {
-	result := creek.FromArray([]int{2, 7, 3, 1}).Reverse().Collect()
-	expected := []int{1, 3, 7, 2}
+	var tests = []struct {
+		array    []int
+		expected []int
+	}{
+		{
+			array:    []int{2, 7, 3, 1, 9, 12, 5},
+			expected: []int{5, 12, 9, 1, 3, 7, 2},
+		},
+		{
+			array:    []int{6, 82, 1, 3, 1343, 12, 9},
+			expected: []int{9, 12, 1343, 3, 1, 82, 6},
+		},
+		{
+			array:    []int{5, 19, 73, 52, 81, 75},
+			expected: []int{75, 81, 52, 73, 19, 5},
+		},
+	}
 
-	if reflect.DeepEqual(result, expected) {
-		t.Logf("Map PASSED - Expected: %v, got: %v", expected, result)
-	} else {
-		t.Errorf("Map FAILED - Expected: %v, got: %v", expected, result)
+	counter := 0
+
+	for _, item := range tests {
+		counter++
+		testname := fmt.Sprintf("Reverse(): #%v", counter)
+
+		t.Run(testname, func(t *testing.T) {
+			result := creek.FromArray(item.array).Reverse().Collect()
+			if reflect.DeepEqual(result, item.expected) {
+				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
+				return
+			}
+
+			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
+		})
 	}
 }
 
 func TestJoin(t *testing.T) {
-	result := creek.FromArray([]int{2, 7, 3, 1}).Join(", ")
-	expected := "2, 7, 3, 1"
-
-	if reflect.DeepEqual(result, expected) {
-		t.Logf("Map PASSED - Expected: %v, got: %v", expected, result)
-	} else {
-		t.Errorf("Map FAILED - Expected: %v, got: %v", expected, result)
+	var tests = []struct {
+		array    []int
+		joinChar string
+		expected string
+	}{
+		{
+			array:    []int{2, 7, 3, 1, 9, 12, 5},
+			joinChar: ", ",
+			expected: "2, 7, 3, 1, 9, 12, 5",
+		},
+		{
+			array:    []int{6, 82, 1, 3, 1343, 12, 9},
+			joinChar: "asd",
+			expected: "6asd82asd1asd3asd1343asd12asd9",
+		},
+		{
+			array:    []int{5, 19, 73, 52, 81, 75},
+			joinChar: "",
+			expected: "51973528175",
+		},
 	}
 
-	// --------------
+	counter := 0
 
-	result = creek.FromArray([]int{2, 7, 3, 1}).Join(" asd, ")
-	expected = "2 asd, 7 asd, 3 asd, 1"
+	for _, item := range tests {
+		counter++
+		testname := fmt.Sprintf("Join(): #%v", counter)
 
-	if reflect.DeepEqual(result, expected) {
-		t.Logf("Map PASSED - Expected: %v, got: %v", expected, result)
-	} else {
-		t.Errorf("Map FAILED - Expected: %v, got: %v", expected, result)
+		t.Run(testname, func(t *testing.T) {
+			result := creek.FromArray(item.array).Join(item.joinChar)
+			if reflect.DeepEqual(result, item.expected) {
+				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
+				return
+			}
+
+			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
+		})
 	}
 }
 
 func TestContains(t *testing.T) {
-	result := creek.FromArray([]int{2, 7, 3, 1}).Contains(2)
-	expected := true
-
-	if reflect.DeepEqual(result, expected) {
-		t.Logf("Map PASSED - Expected: %v, got: %v", expected, result)
-	} else {
-		t.Errorf("Map FAILED - Expected: %v, got: %v", expected, result)
+	var tests = []struct {
+		array    []int
+		contains int
+		expected bool
+	}{
+		{
+			array:    []int{2, 7, 3, 1},
+			contains: 2,
+			expected: true,
+		},
+		{
+			array:    []int{2, 7, 3, 1},
+			contains: 23114,
+			expected: false,
+		},
 	}
 
-	// --------------
+	counter := 0
 
-	result = creek.FromArray([]int{2, 7, 3, 1}).Contains(1213231)
-	expected = false
+	for _, item := range tests {
+		counter++
+		testname := fmt.Sprintf("Contains(): #%v", counter)
 
-	if reflect.DeepEqual(result, expected) {
-		t.Logf("Map PASSED - Expected: %v, got: %v", expected, result)
-	} else {
-		t.Errorf("Map FAILED - Expected: %v, got: %v", expected, result)
-	}
+		t.Run(testname, func(t *testing.T) {
+			result := creek.FromArray(item.array).Contains(item.contains)
+			if reflect.DeepEqual(result, item.expected) {
+				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
+				return
+			}
 
-	// --------------
-
-	result2 := creek.FromStructs(GetTestStructArray()).Equals(creek.FromStructs(GetTestStructArray()))
-	expected2 := true
-
-	if reflect.DeepEqual(result2, expected2) {
-		t.Logf("Map PASSED - Expected: %v, got: %v", expected2, result2)
-	} else {
-		t.Errorf("Map FAILED - Expected: %v, got: %v", expected2, result2)
+			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
+		})
 	}
 }
 
 func TestIsEmpty(t *testing.T) {
-	result := creek.FromArray([]int{}).IsEmpty()
-	expected := true
-
-	if reflect.DeepEqual(result, expected) {
-		t.Logf("Map PASSED - Expected: %v, got: %v", expected, result)
-	} else {
-		t.Errorf("Map FAILED - Expected: %v, got: %v", expected, result)
+	var tests = []struct {
+		array    []int
+		expected bool
+	}{
+		{
+			array:    []int{},
+			expected: true,
+		},
+		{
+			array:    []int{2, 7, 3, 1},
+			expected: false,
+		},
+		{
+			array:    []int{2},
+			expected: false,
+		},
 	}
 
-	// --------------
+	counter := 0
 
-	result = creek.FromArray([]int{2, 7, 3, 1}).IsEmpty()
-	expected = false
+	for _, item := range tests {
+		counter++
+		testname := fmt.Sprintf("IsEmpty(): #%v", counter)
 
-	if reflect.DeepEqual(result, expected) {
-		t.Logf("Map PASSED - Expected: %v, got: %v", expected, result)
-	} else {
-		t.Errorf("Map FAILED - Expected: %v, got: %v", expected, result)
+		t.Run(testname, func(t *testing.T) {
+			result := creek.FromArray(item.array).IsEmpty()
+			if reflect.DeepEqual(result, item.expected) {
+				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
+				return
+			}
+
+			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
+		})
 	}
 }
 
 func TestClear(t *testing.T) {
-	result := creek.FromArray([]int{3, 4, 1, 4, 2, 9}).Clear().Collect()
-	expected := []int{}
+	var tests = []struct {
+		array    []int
+		expected []int
+	}{
+		{
+			array:    []int{},
+			expected: []int{},
+		},
+		{
+			array:    []int{2, 7, 3, 1},
+			expected: []int{},
+		},
+		{
+			array:    []int{2},
+			expected: []int{},
+		},
+	}
 
-	if reflect.DeepEqual(result, expected) {
-		t.Logf("Map PASSED - Expected: %v, got: %v", expected, result)
-	} else {
-		t.Errorf("Map FAILED - Expected: %v, got: %v", expected, result)
+	counter := 0
+
+	for _, item := range tests {
+		counter++
+		testname := fmt.Sprintf("Clear(): #%v", counter)
+
+		t.Run(testname, func(t *testing.T) {
+			result := creek.FromArray(item.array).Clear().Collect()
+			if reflect.DeepEqual(result, item.expected) {
+				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
+				return
+			}
+
+			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
+		})
 	}
 }
 
 func TestCount(t *testing.T) {
-	result := creek.FromArray([]int{3, 4, 1, 4, 2, 9}).Count()
-	expected := 6
+	var tests = []struct {
+		array    []int
+		expected int
+	}{
+		{
+			array:    []int{},
+			expected: 0,
+		},
+		{
+			array:    []int{2, 7, 3, 1},
+			expected: 4,
+		},
+		{
+			array:    []int{2},
+			expected: 1,
+		},
+	}
 
-	if reflect.DeepEqual(result, expected) {
-		t.Logf("Map PASSED - Expected: %v, got: %v", expected, result)
-	} else {
-		t.Errorf("Map FAILED - Expected: %v, got: %v", expected, result)
+	counter := 0
+
+	for _, item := range tests {
+		counter++
+		testname := fmt.Sprintf("Count(): #%v", counter)
+
+		t.Run(testname, func(t *testing.T) {
+			result := creek.FromArray(item.array).Count()
+			if reflect.DeepEqual(result, item.expected) {
+				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
+				return
+			}
+
+			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
+		})
 	}
 }
