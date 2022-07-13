@@ -17,3 +17,11 @@ test_coverage:
 .PHONY: fmt
 fmt:
 	go fmt -x ./ ./test ./cmd/main
+
+.PHONY: docs
+docs:
+	go doc Stream
+
+.PHONY: vet
+vet:
+	go vet -x ./
