@@ -116,6 +116,8 @@ func main() {
     - [MinIndex](#minindex)
     - [OrderBy](#orderby)
     - [OrderByDescending](#orderbydescending)
+    - [Push](#push)
+    - [PushValues](#pushvalues)
     - [Remove](#remove)
     - [RemoveAt](#removeat)
     - [RemoveDuplicates](#removeduplicates)
@@ -527,6 +529,21 @@ The `OrderByDescending` function sorts the stream in descending order.
 ```go
 arr := []int{1, 8, 2, 14, 22, 4, 7, 92}
 result := creek.FromArray(arr).OrderByDescending() // [92, 22, 14, 8, 7, 4, 2, 1]
+```
+
+### Push
+The `Push` function adds the passed array to the end of the stream.
+```go
+arr := []int{1, 8, 2, 14, 22, 4, 7, 92}
+toPush := []int{2, 8}
+result := creek.FromArray(arr).Push(toPush) // [1, 8, 2, 14, 22, 4, 7, 92, 2, 8]
+```
+
+### PushValues
+The `PushValues` function adds the passed values to the end of the stream.
+```go
+arr := []int{1, 8, 2, 14, 22, 4, 7, 92}
+result := creek.FromArray(arr).PushValues(2, 8) // [1, 8, 2, 14, 22, 4, 7, 92, 2, 8]
 ```
 
 ### Remove
