@@ -126,3 +126,36 @@ func (s StructStream[T]) Clear() StructStream[T] {
 func (s StructStream[T]) Count() int {
 	return len(s.Array)
 }
+
+// The ContainsKey function checks whether the stream contains an item with the passed key.
+func (s MapStream[T, V]) ContainsKey(key T) bool {
+	for i := 0; i < len(s.Array); i++ {
+		if s.Array[i].Key == key {
+			return true
+		}
+	}
+
+	return false
+}
+
+// The IsEmpty function checks whether the stream is empty.
+func (s MapStream[T, V]) IsEmpty() bool {
+	return len(s.Array) == 0
+}
+
+// The IsNotEmpty function checks whether the stream is not empty.
+func (s MapStream[T, V]) IsNotEmpty() bool {
+	return len(s.Array) != 0
+}
+
+// The Clear function clears every element from the stream.
+func (s MapStream[T, V]) Clear() Stream[T] {
+	return Stream[T]{
+		Array: []T{},
+	}
+}
+
+// The Count function returns the count of elements in the stream.
+func (s MapStream[T, V]) Count() int {
+	return len(s.Array)
+}

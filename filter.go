@@ -16,6 +16,21 @@ func (s StructStream[T]) Filter(expression func(item T) bool) StructStream[T] {
 	}
 }
 
+// The Filter function leaves only those elements in the array
+// that make the specified condition true.
+func (s MapStream[T, V]) Filter(expression func(KeyValuePair[T, V]) bool) MapStream[T, V] {
+	res := []KeyValuePair[T, V]{}
+	for i := 0; i < len(s.Array); i++ {
+		if expression(s.Array[i]) {
+			res = append(res, s.Array[i])
+		}
+	}
+
+	return MapStream[T, V]{
+		Array: res,
+	}
+}
+
 func filter[T interface{}](expression func(item T) bool, arr []T) []T {
 	res := []T{}
 	for i := 0; i < len(arr); i++ {

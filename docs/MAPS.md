@@ -6,11 +6,19 @@
     - [All](#all)
     - [Append](#append)
     - [AppendIf](#appendif)
+    - [Clear](#clear)
     - [Collect](#collect)
+    - [Count](#count)
+    - [ContainsKey](#containskey)
     - [ElementAt](#elementat)
     - [ElementAtOrElse](#elementatorelse)
+    - [Filter](#filter)
     - [First](#first)
+    - [ForEach](#foreach)
+    - [IsEmpty](#isempty)
+    - [IsNotEmpty](#isnotempty)
     - [Last](#last)
+    - [Wait](#wait)
 
 <hr>
 
@@ -50,11 +58,32 @@ toAppend := creek.KeyValuePair[int, string]{Key: 4, Value: "Michael"}
 result := creek.FromMap(arr).AppendIf(toAppend, true)
 ```
 
+### Clear
+The `Clear` function clears every element from the stream.
+```go
+arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
+result := creek.FromMap(arr).Clear() // []
+```
+
 ### Collect
 The `Collect` function returns the modified map from the streams.
 ```go
 arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
 result := creek.FromMap(arr).Collect() // map[int]string{1: "Mark", 2: "John", 3: "Jack"}
+```
+
+### Count
+The `Count` function returns the count of elements in the stream.
+```go
+arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
+result := creek.FromMap(arr).Count() // 3
+```
+
+### ContainsKey
+The `ContainsKey` function checks whether the stream contains an item with the passed key
+```go
+arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
+result := creek.FromMap(arr).ContainsKey(2) // true
 ```
 
 ### ElementAt
@@ -75,6 +104,15 @@ elseValue := creek.KeyValuePair[int, string]{Key: 4, Value: "Michael"}
 result := creek.FromMap(arr).ElementAtOrElse(5, elseValue)
 ```
 
+### Filter
+The `Filter` function leaves only those elements in the array that make the specified condition true.
+```go
+arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
+result := creek.FromMap(arr).Filter(func(kvp creek.KeyValuePair[int, string]) bool {
+    return kvp.Key > 1
+})
+```
+
 ### First
 The `First` method returns the first element in the stream.
 ```go
@@ -82,9 +120,46 @@ arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
 result := creek.FromMap(arr).First() // 1: "Mark"
 ```
 
+### ForEach
+The `ForEach` method runs the specified method on every element in the Stream.  
+Warning: this method doesn't return anything
+```go
+arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
+creek.FromMap(arr).ForEach(func(kvp creek.KeyValuePair[int, string]) {
+    fmt.Println(kvp.Key, kvp.Value)
+})
+
+// -- Output: --
+// 1 Mark
+// 2 John
+// 3 Jack
+```
+
+### IsEmpty
+The `IsEmpty` function checks whether the stream is empty.
+```go
+arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
+result = creek.FromMap(arr).IsEmpty() // false
+```
+
+### IsNotEmpty
+The `IsNotEmpty` function checks whether the stream is not empty.
+```go
+arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
+result = creek.FromMap(arr).IsEmpty() // true
+```
+
 ### Last
 The `Last` method returns the last element in the stream.
 ```go
 arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
 result := creek.FromMap(arr).Last() // 3: "Jack"
+```
+
+### Wait
+The `Wait` function pauses the current stream for the duration passed.
+The first and only parameter expects a value from the built-in `time.Duration` package.
+```go
+arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
+result := creek.FromMap(arr).Wait(time.Second * 5) // waits for 5 seconds
 ```
