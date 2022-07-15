@@ -295,7 +295,6 @@ creek.FromArray(result).ForEach(func(num int) {
 ## Contributing
 Every contribution is welcomed.  
 You can find [here](CONTRIBUTING.md) a contributing guideline.  
-A star would be appreciated as well. 😉
 
 <hr>
 

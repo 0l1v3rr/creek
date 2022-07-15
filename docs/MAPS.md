@@ -18,6 +18,8 @@
     - [IsEmpty](#isempty)
     - [IsNotEmpty](#isnotempty)
     - [Last](#last)
+    - [Shuffle](#shuffle)
+    - [Some](#some)
     - [Wait](#wait)
 
 <hr>
@@ -154,6 +156,24 @@ The `Last` method returns the last element in the stream.
 ```go
 arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
 result := creek.FromMap(arr).Last() // 3: "Jack"
+```
+
+### Shuffle
+The `Shuffle` function shuffles the stream.
+```go
+arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
+result := creek.FromMap(arr).Shuffle()
+```
+
+### Some
+The `Some` function determines whether any of the elements of the stream satisfy the passed condition.
+```go
+arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
+
+result := creek.FromMap(arr).Some(func(item creek.KeyValuePair[int, string]) bool {
+    return item.Key > 0
+})
+// true
 ```
 
 ### Wait

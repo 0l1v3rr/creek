@@ -19,3 +19,12 @@ func (s StructStream[T]) Shuffle() StructStream[T] {
 
 	return s
 }
+
+// The Shuffle function shuffles the stream.
+func (s MapStream[T, V]) Shuffle() MapStream[T, V] {
+	rand.Shuffle(len(s.Array), func(i, j int) {
+		s.Array[i], s.Array[j] = s.Array[j], s.Array[i]
+	})
+
+	return s
+}
