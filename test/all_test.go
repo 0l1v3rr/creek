@@ -60,4 +60,42 @@ func TestAll(t *testing.T) {
 			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
 		})
 	}
+
+	// MAP TESTS
+
+	var tests2 = []struct {
+		array    map[int]string
+		function func(item creek.KeyValuePair[int, string]) bool
+		expected bool
+	}{
+		{
+			array: map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+			function: func(item creek.KeyValuePair[int, string]) bool {
+				return item.Key > 0
+			},
+			expected: true,
+		},
+		{
+			array: map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+			function: func(item creek.KeyValuePair[int, string]) bool {
+				return len(item.Value) < 2
+			},
+			expected: false,
+		},
+	}
+
+	for _, item := range tests2 {
+		counter++
+		testname := fmt.Sprintf("All(): #%v", counter)
+
+		t.Run(testname, func(t *testing.T) {
+			result := creek.FromMap(item.array).All(item.function)
+			if reflect.DeepEqual(result, item.expected) {
+				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
+				return
+			}
+
+			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
+		})
+	}
 }

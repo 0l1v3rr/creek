@@ -18,6 +18,25 @@ func (s StructStream[T]) Append(item T) StructStream[T] {
 	}
 }
 
+// The Append function adds an element to the stream.
+func (s MapStream[T, V]) Append(item KeyValuePair[T, V]) MapStream[T, V] {
+	res := []KeyValuePair[T, V]{}
+
+	for i := 0; i < len(s.Array); i++ {
+		if s.Array[i].Key == item.Key {
+			continue
+		}
+
+		res = append(res, s.Array[i])
+	}
+
+	res = append(res, item)
+
+	return MapStream[T, V]{
+		Array: res,
+	}
+}
+
 // The AppendIf function adds an element to the stream if the second parameter is true.
 func (s Stream[T]) AppendIf(item T, c bool) Stream[T] {
 	if c {
@@ -37,6 +56,33 @@ func (s StructStream[T]) AppendIf(item T, c bool) StructStream[T] {
 
 	return StructStream[T]{
 		Array: s.Array,
+	}
+}
+
+// The AppendIf function adds an element to the stream if the second parameter is true.
+func (s MapStream[T, V]) AppendIf(item KeyValuePair[T, V], c bool) MapStream[T, V] {
+	if c {
+		s.Array = append(s.Array, item)
+	}
+
+	res := []KeyValuePair[T, V]{}
+
+	for i := 0; i < len(s.Array); i++ {
+		if s.Array[i].Key == item.Key {
+			if c {
+				continue
+			}
+		}
+
+		res = append(res, s.Array[i])
+	}
+
+	if c {
+		res = append(res, item)
+	}
+
+	return MapStream[T, V]{
+		Array: res,
 	}
 }
 

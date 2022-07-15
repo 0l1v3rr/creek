@@ -42,6 +42,46 @@ func TestAppend(t *testing.T) {
 			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
 		})
 	}
+
+	// MAP TESTS
+
+	var tests2 = []struct {
+		array    map[int]string
+		toAppend creek.KeyValuePair[int, string]
+		expected map[int]string
+	}{
+		{
+			array: map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+			toAppend: creek.KeyValuePair[int, string]{
+				Key:   4,
+				Value: "Michael",
+			},
+			expected: map[int]string{1: "Mark", 2: "John", 3: "Jack", 4: "Michael"},
+		},
+		{
+			array: map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+			toAppend: creek.KeyValuePair[int, string]{
+				Key:   1,
+				Value: "Michael",
+			},
+			expected: map[int]string{1: "Michael", 2: "John", 3: "Jack"},
+		},
+	}
+
+	for _, item := range tests2 {
+		counter++
+		testname := fmt.Sprintf("Append(): #%v", counter)
+
+		t.Run(testname, func(t *testing.T) {
+			result := creek.FromMap(item.array).Append(item.toAppend).Collect()
+			if reflect.DeepEqual(result, item.expected) {
+				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
+				return
+			}
+
+			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
+		})
+	}
 }
 
 func TestAppendAt(t *testing.T) {
@@ -130,6 +170,67 @@ func TestAppendIf(t *testing.T) {
 
 		t.Run(testname, func(t *testing.T) {
 			result := creek.FromArray(item.array).AppendIf(item.toAppend, item.shouldAppend).Collect()
+			if reflect.DeepEqual(result, item.expected) {
+				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
+				return
+			}
+
+			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
+		})
+	}
+
+	// MAP TESTS
+
+	var tests2 = []struct {
+		shouldAppend bool
+		array        map[int]string
+		toAppend     creek.KeyValuePair[int, string]
+		expected     map[int]string
+	}{
+		{
+			array: map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+			toAppend: creek.KeyValuePair[int, string]{
+				Key:   4,
+				Value: "Michael",
+			},
+			shouldAppend: true,
+			expected:     map[int]string{1: "Mark", 4: "Michael", 2: "John", 3: "Jack"},
+		},
+		{
+			array: map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+			toAppend: creek.KeyValuePair[int, string]{
+				Key:   1,
+				Value: "Michael",
+			},
+			shouldAppend: true,
+			expected:     map[int]string{1: "Michael", 2: "John", 3: "Jack"},
+		},
+		{
+			array: map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+			toAppend: creek.KeyValuePair[int, string]{
+				Key:   4,
+				Value: "Michael",
+			},
+			shouldAppend: false,
+			expected:     map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+		},
+		{
+			array: map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+			toAppend: creek.KeyValuePair[int, string]{
+				Key:   1,
+				Value: "Michael",
+			},
+			shouldAppend: false,
+			expected:     map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+		},
+	}
+
+	for _, item := range tests2 {
+		counter++
+		testname := fmt.Sprintf("AppendIf(): #%v", counter)
+
+		t.Run(testname, func(t *testing.T) {
+			result := creek.FromMap(item.array).AppendIf(item.toAppend, item.shouldAppend).Collect()
 			if reflect.DeepEqual(result, item.expected) {
 				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
 				return

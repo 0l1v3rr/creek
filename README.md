@@ -37,6 +37,7 @@
   - [Create stream](#create-stream)
     - [Stream from primitive types](#stream-from-primitive-types)
     - [Stream from struct arrays](#stream-from-struct-arrays)
+    - [Create stream from maps](#create-stream-from-maps)
   - [Method chaining](#method-chaining)
   - [Download and build from source](#download-and-build-from-source)
   - [Creek VS Linq VS Java Streams API](#creek-vs-linq-vs-java-streams-api)
@@ -171,6 +172,33 @@ structArray := []YourStruct{
 // The functions are case sensitive. 'name', 'nAme', or 'nAMe' won't work.
 // Make sure you spell it correctly, otherwise it throws an error.
 structStream := creek.FromStructs(structArray).OrderBy("Name")
+```
+
+### Create stream from maps
+You can find the functions documented [here](docs/MAPS.md).  
+
+> **Important:** The functions do not modify the original array or the previous stream. Most of the functions return a new stream.
+
+The supported key and value types are the following:
+> ```go
+> string, byte, float32, float64, int, int16, int32, int64, uint16, uint32, uint64
+> ```
+
+```go
+// --== Stream from an existing map ==--
+arr := map[int]string{
+    1: "Mark",
+    2: "John",
+    3: "Jack",
+}
+
+stream := creek.FromMap(arr)
+```
+
+```go
+// --== Create an empty stream ==--
+// [key, value]
+empty := creek.EmptyMap[int, string]()
 ```
 
 <hr>
