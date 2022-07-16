@@ -18,6 +18,8 @@
     - [IsEmpty](#isempty)
     - [IsNotEmpty](#isnotempty)
     - [Last](#last)
+    - [OrderBy](#orderby)
+    - [OrderByDescending](#orderbydescending)
     - [Shuffle](#shuffle)
     - [Some](#some)
     - [Wait](#wait)
@@ -156,6 +158,20 @@ The `Last` method returns the last element in the stream.
 ```go
 arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
 result := creek.FromMap(arr).Last() // 3: "Jack"
+```
+
+### OrderBy
+The `OrderBy` function sorts the stream in ascending order.  
+```go
+arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
+result := creek.FromMap(arr).OrderBy(creek.ByKey) // [{1 Mark} {2 John} {3 Jack}]
+```
+
+### OrderByDescending
+The `OrderByDescending` function sorts the stream in descending order.
+```go
+arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
+result := creek.FromMap(arr).OrderByDescending(creek.ByValue) // [{1 Mark} {2 John} {3 Jack}]
 ```
 
 ### Shuffle

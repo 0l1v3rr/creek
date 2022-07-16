@@ -29,6 +29,36 @@ func (s Stream[T]) OrderByDescending() Stream[T] {
 }
 
 // The OrderBy function sorts the stream in ascending order.
+func (s MapStream[T, V]) OrderBy(byKey bool) MapStream[T, V] {
+	sort.SliceStable(s.Array, func(i, j int) bool {
+		if byKey {
+			return s.Array[i].Key < s.Array[j].Key
+		}
+
+		return s.Array[i].Value < s.Array[j].Value
+	})
+
+	return MapStream[T, V]{
+		Array: s.Array,
+	}
+}
+
+// The OrderByDescending function sorts the stream in descending order.
+func (s MapStream[T, V]) OrderByDescending(byKey bool) MapStream[T, V] {
+	sort.SliceStable(s.Array, func(i, j int) bool {
+		if byKey {
+			return s.Array[i].Key > s.Array[j].Key
+		}
+
+		return s.Array[i].Value > s.Array[j].Value
+	})
+
+	return MapStream[T, V]{
+		Array: s.Array,
+	}
+}
+
+// The OrderBy function sorts the stream in ascending order.
 // The first parameter is the name of the field you want to sort by.
 func (s StructStream[T]) OrderBy(fieldName string) StructStream[T] {
 	// getting the type of the field

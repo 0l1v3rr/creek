@@ -6,6 +6,9 @@ import (
 	"reflect"
 )
 
+const ByKey bool = true
+const ByValue bool = false
+
 // The Streamable interface defines every type you can use the streams with.
 type Streamable interface {
 	string | byte | float32 | float64 | int | int16 | int32 | int64 | uint16 | uint32 | uint64

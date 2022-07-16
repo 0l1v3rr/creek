@@ -93,6 +93,50 @@ func TestOrderBy(t *testing.T) {
 			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
 		})
 	}
+
+	// -----------
+
+	var tests3 = []struct {
+		array    map[int]string
+		byKey    bool
+		expected map[int]string
+	}{
+		{
+			array:    map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+			byKey:    true,
+			expected: map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+		},
+		{
+			array:    map[int]string{1: "Mark", 3: "Jack", 2: "John"},
+			byKey:    true,
+			expected: map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+		},
+		{
+			array:    map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+			byKey:    false,
+			expected: map[int]string{3: "Jack", 2: "John", 1: "Mark"},
+		},
+		{
+			array:    map[int]string{3: "Jack", 2: "John", 1: "Mark"},
+			byKey:    false,
+			expected: map[int]string{3: "Jack", 2: "John", 1: "Mark"},
+		},
+	}
+
+	for _, item := range tests3 {
+		counter++
+		testname := fmt.Sprintf("OrderBy(): #%v", counter)
+
+		t.Run(testname, func(t *testing.T) {
+			result := creek.FromMap(item.array).OrderBy(item.byKey).Collect()
+			if reflect.DeepEqual(result, item.expected) {
+				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
+				return
+			}
+
+			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
+		})
+	}
 }
 
 func TestOrderByDescending(t *testing.T) {
@@ -172,6 +216,50 @@ func TestOrderByDescending(t *testing.T) {
 
 		t.Run(testname, func(t *testing.T) {
 			result := creek.FromStructs(item.array).OrderByDescending(item.field).Collect()
+			if reflect.DeepEqual(result, item.expected) {
+				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
+				return
+			}
+
+			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
+		})
+	}
+
+	// -----------
+
+	var tests3 = []struct {
+		array    map[int]string
+		byKey    bool
+		expected map[int]string
+	}{
+		{
+			array:    map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+			byKey:    true,
+			expected: map[int]string{3: "Jack", 2: "John", 1: "Mark"},
+		},
+		{
+			array:    map[int]string{1: "Mark", 3: "Jack", 2: "John"},
+			byKey:    true,
+			expected: map[int]string{3: "Jack", 2: "John", 1: "Mark"},
+		},
+		{
+			array:    map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+			byKey:    false,
+			expected: map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+		},
+		{
+			array:    map[int]string{3: "Jack", 2: "John", 1: "Mark"},
+			byKey:    false,
+			expected: map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+		},
+	}
+
+	for _, item := range tests3 {
+		counter++
+		testname := fmt.Sprintf("OrderByDescending(): #%v", counter)
+
+		t.Run(testname, func(t *testing.T) {
+			result := creek.FromMap(item.array).OrderByDescending(item.byKey).Collect()
 			if reflect.DeepEqual(result, item.expected) {
 				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
 				return
