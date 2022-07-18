@@ -13,6 +13,10 @@
     - [ElementAt](#elementat)
     - [ElementAtOrElse](#elementatorelse)
     - [Filter](#filter)
+    - [Find](#find)
+    - [FindIndex](#findindex)
+    - [FindLast](#findlast)
+    - [FindLastIndex](#findlastindex)
     - [First](#first)
     - [ForEach](#foreach)
     - [IsEmpty](#isempty)
@@ -115,6 +119,42 @@ The `Filter` function leaves only those elements in the array that make the spec
 arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
 result := creek.FromMap(arr).Filter(func(kvp creek.KeyValuePair[int, string]) bool {
     return kvp.Key > 1
+})
+```
+
+### Find
+The `Find` function searches for an element that matches the conditions passed and returns the first occurrence within the entire stream.
+```go
+arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
+result := creek.FromMap(arr).Find(func(kvp creek.KeyValuePair[int, string]) bool {
+    return kvp.Key%2 == 0
+})
+```
+
+### FindIndex
+The `FindIndex` function searches for an element that matches the conditions passed and returns the index of the first occurrence within the entire stream.
+```go
+arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
+result := creek.FromMap(arr).FindIndex(func(kvp creek.KeyValuePair[int, string]) bool {
+    return kvp.Key%2 == 0
+})
+```
+
+### FindLast
+The `FindLast` function searches for an element that matches the conditions passed and returns the last occurrence within the entire stream.
+```go
+arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
+result := creek.FromMap(arr).FindLast(func(kvp creek.KeyValuePair[int, string]) bool {
+    return kvp.Key%2 == 0
+})
+```
+
+### FindLastIndex
+The `FindLastIndex` function searches for an element that matches the conditions passed and returns the index of the last occurrence within the entire stream.
+```go
+arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
+result := creek.FromMap(arr).FindLastIndex(func(kvp creek.KeyValuePair[int, string]) bool {
+    return kvp.Key%2 == 0
 })
 ```
 
