@@ -47,7 +47,7 @@ func (s Stream[T]) Min() T {
 	return min
 }
 
-// The MaxIndex function returns the index of the smallest element from the stream.
+// The MinIndex function returns the index of the smallest element from the stream.
 func (s Stream[T]) MinIndex() int {
 	min := s.Array[0]
 	minIndex := 0
@@ -166,7 +166,7 @@ func (s StructStream[T]) Min(fieldName string) T {
 	return s.Array[minIndex]
 }
 
-// The MaxIndex function returns the index of the smallest element from the stream.
+// The MinIndex function returns the index of the smallest element from the stream.
 // The first parameter is the name of the field you want to calculate by.
 func (s StructStream[T]) MinIndex(fieldName string) int {
 	// getting the type of the field
@@ -261,4 +261,128 @@ func fieldValue[T any](item T, fieldName string) interface{} {
 	}
 
 	return reflect.ValueOf(item).FieldByName(fieldName).String()
+}
+
+// The Max function returns the largest element from the stream.
+func (s MapStream[T, V]) Max(byKey bool) KeyValuePair[T, V] {
+	max := s.Array[0]
+
+	for i := 1; i < len(s.Array); i++ {
+		if byKey {
+			if s.Array[i].Key > max.Key {
+				max = s.Array[i]
+			}
+
+			continue
+		}
+
+		if s.Array[i].Value > max.Value {
+			max = s.Array[i]
+		}
+	}
+
+	return max
+}
+
+// The MaxIndex function returns the index of the largest element from the stream.
+func (s MapStream[T, V]) MaxIndex(byKey bool) int {
+	max := s.Array[0]
+	maxIndex := 0
+
+	for i := 1; i < len(s.Array); i++ {
+		if byKey {
+			if s.Array[i].Key > max.Key {
+				max = s.Array[i]
+				maxIndex = i
+			}
+
+			continue
+		}
+
+		if s.Array[i].Value > max.Value {
+			max = s.Array[i]
+			maxIndex = i
+		}
+	}
+
+	return maxIndex
+}
+
+// The Min function returns the smallest element from the stream.
+func (s MapStream[T, V]) Min(byKey bool) KeyValuePair[T, V] {
+	min := s.Array[0]
+
+	for i := 1; i < len(s.Array); i++ {
+		if byKey {
+			if s.Array[i].Key < min.Key {
+				min = s.Array[i]
+			}
+
+			continue
+		}
+
+		if s.Array[i].Value < min.Value {
+			min = s.Array[i]
+		}
+	}
+
+	return min
+}
+
+// The MinIndex function returns the index of the smallest element from the stream.
+func (s MapStream[T, V]) MinIndex(byKey bool) int {
+	min := s.Array[0]
+	minIndex := 0
+
+	for i := 1; i < len(s.Array); i++ {
+		if byKey {
+			if s.Array[i].Key < min.Key {
+				min = s.Array[i]
+				minIndex = i
+			}
+
+			continue
+		}
+
+		if s.Array[i].Value < min.Value {
+			min = s.Array[i]
+			minIndex = i
+		}
+	}
+
+	return minIndex
+}
+
+// The Sum function adds up all values in a stream.
+func (s MapStream[T, V]) Sum(byKey bool) interface{} {
+	if byKey {
+		var sum T
+
+		for i := 0; i < len(s.Array); i++ {
+			sum += s.Array[i].Key
+		}
+
+		return sum
+	}
+
+	var sum V
+
+	for i := 0; i < len(s.Array); i++ {
+		sum += s.Array[i].Value
+	}
+
+	return sum
+}
+
+// The Average function calculates the average of the stream.
+// This function doesn't work with strings.
+func (s MapStream[T, V]) Average(byKey bool) float64 {
+	sum := s.Sum(byKey)
+
+	if reflect.TypeOf(sum).Kind() == reflect.String {
+		panic("the MinIndex function doesn't work on string types")
+	}
+
+	floatSum, _ := strconv.ParseFloat(fmt.Sprintf("%v", sum), 64)
+	return floatSum / float64(len(s.Array))
 }

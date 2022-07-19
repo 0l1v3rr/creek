@@ -45,7 +45,7 @@ func TestMax(t *testing.T) {
 		})
 	}
 
-	// ----------------------
+	// STRUCT TESTS
 
 	var tests2 = []struct {
 		array    []TestStruct
@@ -64,14 +64,46 @@ func TestMax(t *testing.T) {
 		},
 	}
 
-	// -----------------
-
 	for _, item := range tests2 {
 		counter++
 		testname := fmt.Sprintf("Max(): #%v", counter)
 
 		t.Run(testname, func(t *testing.T) {
 			result := creek.FromStructs(item.array).Max(item.filed)
+			if reflect.DeepEqual(result, item.expected) {
+				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
+				return
+			}
+
+			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
+		})
+	}
+
+	// MAP TESTS
+
+	var tests3 = []struct {
+		array    map[int]string
+		byKey    bool
+		expected creek.KeyValuePair[int, string]
+	}{
+		{
+			array:    map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+			byKey:    true,
+			expected: creek.KeyValuePair[int, string]{Key: 3, Value: "Jack"},
+		},
+		{
+			array:    map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+			byKey:    false,
+			expected: creek.KeyValuePair[int, string]{Key: 1, Value: "Mark"},
+		},
+	}
+
+	for _, item := range tests3 {
+		counter++
+		testname := fmt.Sprintf("Max(): #%v", counter)
+
+		t.Run(testname, func(t *testing.T) {
+			result := creek.FromMap(item.array).Max(item.byKey)
 			if reflect.DeepEqual(result, item.expected) {
 				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
 				return
@@ -118,7 +150,7 @@ func TestMaxIndex(t *testing.T) {
 		})
 	}
 
-	// ----------------------
+	// STRUCT TESTS
 
 	var tests2 = []struct {
 		array    []TestStruct
@@ -137,14 +169,46 @@ func TestMaxIndex(t *testing.T) {
 		},
 	}
 
-	// -----------------
-
 	for _, item := range tests2 {
 		counter++
 		testname := fmt.Sprintf("MaxIndex(): #%v", counter)
 
 		t.Run(testname, func(t *testing.T) {
 			result := creek.FromStructs(item.array).MaxIndex(item.filed)
+			if reflect.DeepEqual(result, item.expected) {
+				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
+				return
+			}
+
+			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
+		})
+	}
+
+	// MAP TESTS
+
+	var tests3 = []struct {
+		array    map[int]string
+		byKey    bool
+		expected int
+	}{
+		{
+			array:    map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+			byKey:    true,
+			expected: 2,
+		},
+		{
+			array:    map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+			byKey:    false,
+			expected: 0,
+		},
+	}
+
+	for _, item := range tests3 {
+		counter++
+		testname := fmt.Sprintf("MaxIndex(): #%v", counter)
+
+		t.Run(testname, func(t *testing.T) {
+			result := creek.FromMap(item.array).MaxIndex(item.byKey)
 			if reflect.DeepEqual(result, item.expected) {
 				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
 				return
@@ -191,7 +255,7 @@ func TestMin(t *testing.T) {
 		})
 	}
 
-	// ----------------------
+	// STRUCT TESTS
 
 	var tests2 = []struct {
 		array    []TestStruct
@@ -210,14 +274,46 @@ func TestMin(t *testing.T) {
 		},
 	}
 
-	// -----------------
-
 	for _, item := range tests2 {
 		counter++
 		testname := fmt.Sprintf("Min(): #%v", counter)
 
 		t.Run(testname, func(t *testing.T) {
 			result := creek.FromStructs(item.array).Min(item.filed)
+			if reflect.DeepEqual(result, item.expected) {
+				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
+				return
+			}
+
+			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
+		})
+	}
+
+	// MAP TESTS
+
+	var tests3 = []struct {
+		array    map[int]string
+		byKey    bool
+		expected creek.KeyValuePair[int, string]
+	}{
+		{
+			array:    map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+			byKey:    true,
+			expected: creek.KeyValuePair[int, string]{Key: 1, Value: "Mark"},
+		},
+		{
+			array:    map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+			byKey:    false,
+			expected: creek.KeyValuePair[int, string]{Key: 3, Value: "Jack"},
+		},
+	}
+
+	for _, item := range tests3 {
+		counter++
+		testname := fmt.Sprintf("Min(): #%v", counter)
+
+		t.Run(testname, func(t *testing.T) {
+			result := creek.FromMap(item.array).Min(item.byKey)
 			if reflect.DeepEqual(result, item.expected) {
 				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
 				return
@@ -264,7 +360,7 @@ func TestMinIndex(t *testing.T) {
 		})
 	}
 
-	// ----------------------
+	// STRUCT TESTS
 
 	var tests2 = []struct {
 		array    []TestStruct
@@ -283,14 +379,46 @@ func TestMinIndex(t *testing.T) {
 		},
 	}
 
-	// -----------------
-
 	for _, item := range tests2 {
 		counter++
 		testname := fmt.Sprintf("MinIndex(): #%v", counter)
 
 		t.Run(testname, func(t *testing.T) {
 			result := creek.FromStructs(item.array).MinIndex(item.filed)
+			if reflect.DeepEqual(result, item.expected) {
+				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
+				return
+			}
+
+			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
+		})
+	}
+
+	// MAP TESTS
+
+	var tests3 = []struct {
+		array    map[int]string
+		byKey    bool
+		expected int
+	}{
+		{
+			array:    map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+			byKey:    true,
+			expected: 0,
+		},
+		{
+			array:    map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+			byKey:    false,
+			expected: 2,
+		},
+	}
+
+	for _, item := range tests3 {
+		counter++
+		testname := fmt.Sprintf("MinIndex(): #%v", counter)
+
+		t.Run(testname, func(t *testing.T) {
+			result := creek.FromMap(item.array).MinIndex(item.byKey)
 			if reflect.DeepEqual(result, item.expected) {
 				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
 				return
@@ -337,7 +465,7 @@ func TestSum(t *testing.T) {
 		})
 	}
 
-	// ----------------------
+	// STRUCT TESTS
 
 	var tests2 = []struct {
 		array    []TestStruct
@@ -356,14 +484,43 @@ func TestSum(t *testing.T) {
 		},
 	}
 
-	// -----------------
-
 	for _, item := range tests2 {
 		counter++
 		testname := fmt.Sprintf("Sum(): #%v", counter)
 
 		t.Run(testname, func(t *testing.T) {
 			result, _ := strconv.Atoi(fmt.Sprintf("%v", creek.FromStructs(item.array).Sum(item.filed)))
+			if reflect.DeepEqual(result, item.expected) {
+				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
+				return
+			}
+
+			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
+		})
+	}
+
+	// MAP TESTS
+
+	var tests3 = []struct {
+		array    map[int]string
+		expected int
+	}{
+		{
+			array:    map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+			expected: 6,
+		},
+		{
+			array:    map[int]string{4: "Mark", 5: "John", 6: "Jack"},
+			expected: 15,
+		},
+	}
+
+	for _, item := range tests3 {
+		counter++
+		testname := fmt.Sprintf("Sum(): #%v", counter)
+
+		t.Run(testname, func(t *testing.T) {
+			result := creek.FromMap(item.array).Sum(true)
 			if reflect.DeepEqual(result, item.expected) {
 				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
 				return
@@ -410,7 +567,7 @@ func TestAverage(t *testing.T) {
 		})
 	}
 
-	// -----------------
+	// STRUCT TEST
 
 	result2, _ := strconv.Atoi(fmt.Sprintf("%v", creek.FromStructs(GetTestStructArray()).Average("Id")))
 	expected2 := 2
@@ -419,5 +576,36 @@ func TestAverage(t *testing.T) {
 		t.Logf("Average PASSED - Expected: %v, got: %v", expected2, result2)
 	} else {
 		t.Errorf("Average FAILED - Expected: %v, got: %v", expected2, result2)
+	}
+
+	// MAP TESTS
+
+	var tests3 = []struct {
+		array    map[int]string
+		expected float64
+	}{
+		{
+			array:    map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+			expected: 2,
+		},
+		{
+			array:    map[int]string{4: "Mark", 5: "John", 6: "Jack"},
+			expected: 5,
+		},
+	}
+
+	for _, item := range tests3 {
+		counter++
+		testname := fmt.Sprintf("Average(): #%v", counter)
+
+		t.Run(testname, func(t *testing.T) {
+			result := creek.FromMap(item.array).Average(true)
+			if reflect.DeepEqual(result, item.expected) {
+				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
+				return
+			}
+
+			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
+		})
 	}
 }

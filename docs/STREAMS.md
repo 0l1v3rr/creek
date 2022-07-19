@@ -344,7 +344,7 @@ result := creek.FromArray(arr).Min() // 1
 ```
 
 ### MinIndex
-The `MaxIndex` function returns the index of the smallest element from the stream.
+The `MinIndex` function returns the index of the smallest element from the stream.
 ```go
 arr := []int{2, 7, 3, 1, 9, 12, 5}
 result := creek.FromArray(arr).MinIndex() // 3

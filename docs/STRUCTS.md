@@ -475,7 +475,7 @@ result := creek.FromStructs(structArray).Min("Id")
 ```
 
 ### MinIndex
-The `MaxIndex` function returns the index of the smallest element from the stream.
+The `MinIndex` function returns the index of the smallest element from the stream.
 ```go
 structArray := []YourStruct{
     {Id: 1, Name: "John"},

@@ -6,6 +6,7 @@
     - [All](#all)
     - [Append](#append)
     - [AppendIf](#appendif)
+    - [Average](#average)
     - [Clear](#clear)
     - [Collect](#collect)
     - [Count](#count)
@@ -23,10 +24,15 @@
     - [IsNotEmpty](#isnotempty)
     - [Last](#last)
     - [Map](#map)
+    - [Max](#max)
+    - [MaxIndex](#maxindex)
+    - [Min](#min)
+    - [MinIndex](#minindex)
     - [OrderBy](#orderby)
     - [OrderByDescending](#orderbydescending)
     - [Shuffle](#shuffle)
     - [Some](#some)
+    - [Sum](#sum)
     - [Wait](#wait)
 
 <hr>
@@ -65,6 +71,14 @@ arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
 toAppend := creek.KeyValuePair[int, string]{Key: 4, Value: "Michael"}
 
 result := creek.FromMap(arr).AppendIf(toAppend, true)
+```
+
+### Average
+The `Average` function calculates the average of the stream.  
+This function doesn't work with strings.
+```go
+arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
+result := creek.FromMap(arr).Average(creek.ByKey) // 2
 ```
 
 ### Clear
@@ -213,6 +227,34 @@ result := creek.FromMap(arr).Map(func(item creek.KeyValuePair[int, string]) cree
 }) // [{2 MARK} {4 JOHN} {6 JACK}]
 ```
 
+### Max
+The `Max` function returns the largest element from the stream.
+```go
+arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
+result := creek.FromMap(arr).Max(creek.ByKey) // {3: Jack}
+```
+
+### MaxIndex
+The `MaxIndex` function returns the index of the largest element from the stream.
+```go
+arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
+result := creek.FromMap(arr).MaxIndex(creek.ByValue) // 0
+```
+
+### Min
+The `Min` function returns the smallest element from the stream.
+```go
+arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
+result := creek.FromMap(arr).Min(creek.ByKey) // {1: Mark}
+```
+
+### MinIndex
+The `MinIndex` function returns the index of the smallest element from the stream.
+```go
+arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
+result := creek.FromMap(arr).MinIndex(creek.ByValue) // 2
+```
+
 ### OrderBy
 The `OrderBy` function sorts the stream in ascending order.  
 ```go
@@ -243,6 +285,13 @@ result := creek.FromMap(arr).Some(func(item creek.KeyValuePair[int, string]) boo
     return item.Key > 0
 })
 // true
+```
+
+### Sum
+The `Sum` function adds up all values in a stream.
+```go
+arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
+result := creek.FromMap(arr).Sum(creek.ByKey) // 6
 ```
 
 ### Wait
