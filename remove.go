@@ -137,3 +137,18 @@ func (s StructStream[T]) RemoveAt(index int) StructStream[T] {
 		Array: result,
 	}
 }
+
+// The RemoveWhere function removes all the entries that satisfy the provided condition.
+func (s MapStream[T, V]) RemoveWhere(expression func(KeyValuePair[T, V]) bool) MapStream[T, V] {
+	result := []KeyValuePair[T, V]{}
+
+	for i := 0; i < len(s.Array); i++ {
+		if !expression(s.Array[i]) {
+			result = append(result, s.Array[i])
+		}
+	}
+
+	return MapStream[T, V]{
+		Array: result,
+	}
+}
