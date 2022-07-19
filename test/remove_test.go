@@ -239,3 +239,90 @@ func TestRemoveIf(t *testing.T) {
 		})
 	}
 }
+
+func TestRemoveKey(t *testing.T) {
+	var tests = []struct {
+		array    map[int]string
+		toRemove int
+		expected map[int]string
+	}{
+		{
+			array:    map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+			toRemove: 1,
+			expected: map[int]string{2: "John", 3: "Jack"},
+		},
+		{
+			array:    map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+			toRemove: 2,
+			expected: map[int]string{1: "Mark", 3: "Jack"},
+		},
+		{
+			array:    map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+			toRemove: 3,
+			expected: map[int]string{1: "Mark", 2: "John"},
+		},
+	}
+
+	counter := 0
+
+	for _, item := range tests {
+		counter++
+		testname := fmt.Sprintf("RemoveKey(): #%v", counter)
+
+		t.Run(testname, func(t *testing.T) {
+			result := creek.FromMap(item.array).RemoveKey(item.toRemove).Collect()
+			if reflect.DeepEqual(result, item.expected) {
+				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
+				return
+			}
+
+			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
+		})
+	}
+}
+
+func TestRemoveValue(t *testing.T) {
+	var tests = []struct {
+		array    map[int]string
+		toRemove string
+		expected map[int]string
+	}{
+		{
+			array:    map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+			toRemove: "Mark",
+			expected: map[int]string{2: "John", 3: "Jack"},
+		},
+		{
+			array:    map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+			toRemove: "John",
+			expected: map[int]string{1: "Mark", 3: "Jack"},
+		},
+		{
+			array:    map[int]string{1: "Mark", 2: "John", 3: "Jack"},
+			toRemove: "Jack",
+			expected: map[int]string{1: "Mark", 2: "John"},
+		},
+		{
+			array:    map[int]string{1: "Mark", 2: "John", 3: "Jack", 4: "Jack", 5: "Jack", 6: "Jack"},
+			toRemove: "Jack",
+			expected: map[int]string{1: "Mark", 2: "John"},
+		},
+	}
+
+	counter := 0
+
+	for _, item := range tests {
+		counter++
+		testname := fmt.Sprintf("RemoveValue(): #%v", counter)
+
+		t.Run(testname, func(t *testing.T) {
+			result := creek.FromMap(item.array).RemoveValue(item.toRemove).Collect()
+			if reflect.DeepEqual(result, item.expected) {
+				t.Logf("%v -> PASSED - Expected: %v, got: %v", testname, item.expected, result)
+				return
+			}
+
+			t.Errorf("%v -> FAILED - Expected: %v, got: %v", testname, item.expected, result)
+		})
+	}
+}

@@ -30,6 +30,8 @@
     - [MinIndex](#minindex)
     - [OrderBy](#orderby)
     - [OrderByDescending](#orderbydescending)
+    - [RemoveKey](#removekey)
+    - [RemoveValue](#removevalue)
     - [RemoveWhere](#removewhere)
     - [Shuffle](#shuffle)
     - [Some](#some)
@@ -268,6 +270,20 @@ The `OrderByDescending` function sorts the stream in descending order.
 ```go
 arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
 result := creek.FromMap(arr).OrderByDescending(creek.ByValue) // [{1 Mark} {2 John} {3 Jack}]
+```
+
+### RemoveKey
+The `RemoveKey` function removes every element from a stream where the key is equal to the passed item.
+```go
+arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
+result := creek.FromMap(arr).RemoveKey(2) // {1: "Mark", 3: "Jack"}
+```
+
+### RemoveValue
+The `RemoveValue` function removes every element from a stream where the value is equal to the passed item.
+```go
+arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
+result := creek.FromMap(arr).RemoveValue("John") // {1: "Mark", 3: "Jack"}
 ```
 
 ### RemoveWhere

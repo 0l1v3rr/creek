@@ -152,3 +152,39 @@ func (s MapStream[T, V]) RemoveWhere(expression func(KeyValuePair[T, V]) bool) M
 		Array: result,
 	}
 }
+
+// The RemoveKey function removes every element from a stream
+// where the key is equal to the passed item.
+func (s MapStream[T, V]) RemoveKey(key T) MapStream[T, V] {
+	result := []KeyValuePair[T, V]{}
+
+	for i := 0; i < len(s.Array); i++ {
+		if s.Array[i].Key == key {
+			continue
+		}
+
+		result = append(result, s.Array[i])
+	}
+
+	return MapStream[T, V]{
+		Array: result,
+	}
+}
+
+// The RemoveValue function removes every element from a stream
+// where the value is equal to the passed item.
+func (s MapStream[T, V]) RemoveValue(value V) MapStream[T, V] {
+	result := []KeyValuePair[T, V]{}
+
+	for i := 0; i < len(s.Array); i++ {
+		if s.Array[i].Value == value {
+			continue
+		}
+
+		result = append(result, s.Array[i])
+	}
+
+	return MapStream[T, V]{
+		Array: result,
+	}
+}

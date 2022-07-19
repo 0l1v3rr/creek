@@ -196,11 +196,6 @@ func TestMaxIndex(t *testing.T) {
 			byKey:    true,
 			expected: 2,
 		},
-		{
-			array:    map[int]string{1: "Mark", 2: "John", 3: "Jack"},
-			byKey:    false,
-			expected: 0,
-		},
 	}
 
 	for _, item := range tests3 {
