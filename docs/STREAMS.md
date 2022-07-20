@@ -50,6 +50,7 @@
     - [ReplaceWhere](#replacewhere)
     - [Reverse](#reverse)
     - [Shuffle](#shuffle)
+    - [Skip](#skip)
     - [Slice](#slice)
     - [Some](#some)
     - [Sum](#sum)
@@ -446,6 +447,13 @@ The `Shuffle` function shuffles the stream.
 ```go
 arr := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
 result := creek.FromArray(arr).Shuffle() // [7, 2, 8, 1, 9, 5, 6, 3, 4]
+```
+
+### Skip
+The `Skip` function discards the first n elements of a stream, where n is the passed parameter.
+```go
+arr := []int{2, 7, 3, 1}
+result := creek.FromArray(arr).Skip(2) // [3, 1]
 ```
 
 ### Slice

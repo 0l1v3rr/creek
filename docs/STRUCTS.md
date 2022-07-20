@@ -47,6 +47,7 @@
     - [ReplaceWhere](#replacewhere)
     - [Reverse](#reverse)
     - [Shuffle](#shuffle)
+    - [Skip](#skip)
     - [Slice](#slice)
     - [Some](#some)
     - [Sum](#sum)
@@ -640,6 +641,18 @@ structArray := []YourStruct{
 }
 
 result := creek.FromStructs(structArray).Shuffle()
+```
+
+### Skip
+The `Skip` function discards the first n elements of a stream, where n is the passed parameter.
+```go
+structArray := []YourStruct{
+    {Id: 1, Name: "John"},
+    {Id: 2, Name: "Will"},
+    {Id: 3, Name: "Mark"},
+}
+
+result := creek.FromStructs(structArray).Skip(2)
 ```
 
 ### Slice
