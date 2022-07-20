@@ -10,6 +10,7 @@
     - [AppendIf](#appendif)
     - [ArrEquals](#arrequals)
     - [Average](#average)
+    - [Bind](#bind)
     - [Clear](#clear)
     - [Collect](#collect)
     - [Contains](#contains)
@@ -158,6 +159,20 @@ structArray := []YourStruct{
 }
 
 result := creek.FromStructs(structArray).Average("Id")
+```
+
+### Bind
+The `Bind` function binds the stream into the passed variable.
+```go
+structArray := []YourStruct{
+    {Id: 1, Name: "John"},
+    {Id: 2, Name: "Will"},
+    {Id: 3, Name: "Mark"},
+}
+
+var shouldBindHere []YourStruct
+
+creek.FromStructs(structArray).Bind(&shouldBindHere) // shouldBindHere => [{1 John} {2 Will} {3 Mark}]
 ```
 
 ### Clear

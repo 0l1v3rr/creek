@@ -7,6 +7,7 @@
     - [Append](#append)
     - [AppendIf](#appendif)
     - [Average](#average)
+    - [Bind](#bind)
     - [Clear](#clear)
     - [Collect](#collect)
     - [Count](#count)
@@ -82,6 +83,15 @@ This function doesn't work with strings.
 ```go
 arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
 result := creek.FromMap(arr).Average(creek.ByKey) // 2
+```
+
+### Bind
+The `Bind` function binds the stream into the passed variable.
+```go
+arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
+var shouldBindHere []map[int]string
+
+creek.FromMap(arr).Bind(&shouldBindHere) // shouldBindHere => map[1:Mark 2:John 3:Jack]
 ```
 
 ### Clear

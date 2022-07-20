@@ -10,6 +10,7 @@
     - [ArrEquals](#arrequals)
     - [Average](#average)
     - [BinarySearch](#binarysearch)
+    - [Bind](#bind)
     - [Clear](#clear)
     - [Collect](#collect)
     - [Contains](#contains)
@@ -120,6 +121,15 @@ If the item is not present, it returns -1.
 ```go
 arr := []int{1, 2, 3, 5, 7, 9, 12}
 result := creek.FromArray(arr).BinarySearch(3) // 2
+```
+
+### Bind
+The `Bind` function binds the stream into the passed variable.
+```go
+arr := []int{1, 4, 5, 2}
+var shouldBindHere []int
+
+creek.FromArray(arr).Bind(&shouldBindHere) // shouldBindHere => [1, 4, 5, 2]
 ```
 
 ### Clear

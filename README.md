@@ -94,7 +94,7 @@ func main() {
 You can create a stream from almost every type of array or slice.  
 
 ### Stream from primitive types
-There are 51 functions you can use with this type of stream. (E.g: `Filter`, `Map`, `OrderBy`, etc..).  
+There are 53 functions you can use with this type of stream. (E.g: `Filter`, `Map`, `OrderBy`, etc..).  
 You can find them documented [here](docs/STREAMS.md).  
 
 > **Important:** The functions do not modify the original array or the previous stream. Most of the functions return a new stream.
@@ -137,7 +137,7 @@ stream := creek.FromFile(file)
 The `FromStruct` function creates a new stream from the given struct array.  
 If the given array is not made of struct, it throws an error.  
 
-There are 47 functions you can use with this type of stream. (E.g: `Filter`, `Map`, `OrderBy`, etc..).  
+There are 49 functions you can use with this type of stream. (E.g: `Filter`, `Map`, `OrderBy`, etc..).  
 You can find them documented [here](docs/STRUCTS.md).  
 
 > **Important:** The functions do not modify the original array or the previous stream. Most of the functions return a new stream.
@@ -175,7 +175,8 @@ structStream := creek.FromStructs(structArray).OrderBy("Name")
 ```
 
 ### Create stream from maps
-You can find the functions documented [here](docs/MAPS.md).  
+There are 35 functions you can use with this type of stream.  
+You can find them documented [here](docs/MAPS.md).  
 
 > **Important:** The functions do not modify the original array or the previous stream. Most of the functions return a new stream.
 
