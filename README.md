@@ -10,20 +10,23 @@
 </div>
 <br>
 <div align="center">
+    <a href="https://github.com/0l1v3rr/creek/blob/master/go.mod">
+        <img src="https://img.shields.io/github/go-mod/go-version/0l1v3rr/creek?style=flat-square" alt="Go Version">
+    </a>
     <a href="https://github.com/0l1v3rr/creek/releases">
         <img src="https://img.shields.io/github/release/0l1v3rr/creek.svg?style=flat-square" alt="Relase">
+    </a>
+    <a href="https://pkg.go.dev/github.com/0l1v3rr/creek">
+        <img src="https://img.shields.io/badge/go.dev-reference-007D9C?logo=go&logoColor=white&style=flat-square" alt="go.dev reference">
+    </a>
+    <a href="https://goreportcard.com/report/github.com/0l1v3rr/creek">
+        <img src="https://goreportcard.com/badge/github.com/0l1v3rr/creek?style=flat-square" alt="Go Report">
     </a>
     <a href="https://github.com/0l1v3rr/creek/actions">
         <img src="https://img.shields.io/github/workflow/status/0l1v3rr/creek/Test?style=flat-square" alt="Test Status">
     </a>
     <a href="https://github.com/0l1v3rr/creek/blob/master/LICENSE">
         <img src="https://img.shields.io/github/license/0l1v3rr/creek?style=flat-square" alt="License">
-    </a>
-    <a href="https://github.com/0l1v3rr/creek/blob/master/go.mod">
-        <img src="https://img.shields.io/github/go-mod/go-version/0l1v3rr/creek?style=flat-square" alt="Go Version">
-    </a>
-    <a href="https://goreportcard.com/report/github.com/0l1v3rr/creek">
-        <img src="https://goreportcard.com/badge/github.com/0l1v3rr/creek?style=flat-square" alt="Go Report">
     </a>
 </div>
 
