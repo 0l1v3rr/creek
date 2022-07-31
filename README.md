@@ -178,7 +178,7 @@ structStream := creek.FromStructs(structArray).OrderBy("Name")
 ```
 
 ### Create stream from maps
-There are 35 functions you can use with this type of stream.  
+There are 37 functions you can use with this type of stream.  
 You can find them documented [here](docs/MAPS.md).  
 
 > **Important:** The functions do not modify the original array or the previous stream. Most of the functions return a new stream.

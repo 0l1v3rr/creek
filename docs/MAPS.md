@@ -23,6 +23,7 @@
     - [ForEach](#foreach)
     - [IsEmpty](#isempty)
     - [IsNotEmpty](#isnotempty)
+    - [Keys](#keys)
     - [Last](#last)
     - [Map](#map)
     - [Max](#max)
@@ -37,6 +38,7 @@
     - [Shuffle](#shuffle)
     - [Some](#some)
     - [Sum](#sum)
+    - [Values](#values)
     - [Wait](#wait)
 
 <hr>
@@ -221,6 +223,13 @@ arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
 result = creek.FromMap(arr).IsEmpty() // true
 ```
 
+### Keys
+The `Keys` function returns a new stream of the keys of the map.
+```go
+arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
+result := creek.FromMap(arr).Keys() // [1, 2, 3]
+```
+
 ### Last
 The `Last` method returns the last element in the stream.
 ```go
@@ -329,6 +338,13 @@ The `Sum` function adds up all values in a stream.
 ```go
 arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
 result := creek.FromMap(arr).Sum(creek.ByKey) // 6
+```
+
+### Values
+The `Values` function returns a new stream of the values of the map.
+```go
+arr := map[int]string{1: "Mark", 2: "John", 3: "Jack"}
+result := creek.FromMap(arr).Values() // ["Mark", "John", "Jack"]
 ```
 
 ### Wait
